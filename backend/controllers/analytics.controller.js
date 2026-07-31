@@ -1,5 +1,6 @@
 const Lead = require('../models/Lead');
 const Project = require('../models/Project');
+const PageView = require('../models/PageView');
 const asyncHandler = require('../utils/asyncHandler');
 
 // Build a { key: count } map from an aggregation over a status/source-like field.
@@ -94,4 +95,65 @@ const leadsTimeseries = asyncHandler(async (req, res) => {
   res.status(200).json({ status: 'success', days, series });
 });
 
-module.exports = { overview, leadsTimeseries };
+// POST /api/analytics/pageview  (public)
+// Records one page view. Body is validated by Zod upstream. Never throws to the
+// client on tracking failure — analytics must never break the user's page load.
+const recordPageView = asyncHandler(async (req, res) => {
+  const { path, referrer, visitorId, device } = req.body;
+  await PageView.create({ path, referrer, visitorId, device });
+  // 204: nothing to return, keep the beacon response tiny.
+  res.status(204).send();
+});
+
+// GET /api/analytics/traffic?days=30  (admin/staff)
+// Page-view totals, unique visitors, a daily series, and the top pages.
+const traffic = asyncHandler(async (req, res) => {
+  const days = Math.min(Math.max(parseInt(req.query.days, 10) || 30, 1), 365);
+  const since = new Date();
+  since.setHours(0, 0, 0, 0);
+  since.setDate(since.getDate() - (days - 1));
+
+  const [totalViews, uniqueVisitors, dailyRows, topPages] = await Promise.all([
+    PageView.countDocuments({ createdAt: { $gte: since } }),
+    PageView.distinct('visitorId', {
+      createdAt: { $gte: since },
+      visitorId: { $ne: null },
+    }).then((ids) => ids.length),
+    PageView.aggregate([
+      { $match: { createdAt: { $gte: since } } },
+      {
+        $group: {
+          _id: { $dateToString: { format: '%Y-%m-%d', date: '$createdAt' } },
+          count: { $sum: 1 },
+        },
+      },
+      { $sort: { _id: 1 } },
+    ]),
+    PageView.aggregate([
+      { $match: { createdAt: { $gte: since } } },
+      { $group: { _id: '$path', count: { $sum: 1 } } },
+      { $sort: { count: -1 } },
+      { $limit: 10 },
+    ]),
+  ]);
+
+  const counts = toCountMap(dailyRows);
+  const series = [];
+  for (let i = 0; i < days; i += 1) {
+    const d = new Date(since);
+    d.setDate(since.getDate() + i);
+    const key = d.toISOString().slice(0, 10);
+    series.push({ date: key, count: counts[key] || 0 });
+  }
+
+  res.status(200).json({
+    status: 'success',
+    days,
+    totalViews,
+    uniqueVisitors,
+    series,
+    topPages: topPages.map((p) => ({ path: p._id, count: p.count })),
+  });
+});
+
+module.exports = { overview, leadsTimeseries, recordPageView, traffic };

@@ -76,6 +76,13 @@ export function getOverview() {
 export function getLeadsTimeseries(days = 30) {
   return apiFetch(`/api/analytics/leads-timeseries${qs({ days })}`);
 }
+export function getTraffic(days = 30) {
+  return apiFetch(`/api/analytics/traffic${qs({ days })}`);
+}
+// Fire-and-forget page-view beacon (public, no auth). Never throws to the caller.
+export function trackPageView(payload) {
+  return apiFetch('/api/analytics/pageview', { method: 'POST', body: payload }).catch(() => {});
+}
 
 // --- Projects ---
 export function getProjects(params) {

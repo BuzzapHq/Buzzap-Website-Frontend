@@ -1,6 +1,6 @@
 'use client';
 import { useEffect, useState } from 'react';
-import { getOverview, getLeadsTimeseries } from '@/lib/api';
+import { getOverview, getLeadsTimeseries, getTraffic } from '@/lib/api';
 
 const KPI_CONFIG = [
   { key: 'totalLeads', label: 'Total leads' },
@@ -14,14 +14,16 @@ const KPI_CONFIG = [
 export default function DashboardOverview() {
   const [data, setData] = useState(null);
   const [series, setSeries] = useState([]);
+  const [traffic, setTraffic] = useState(null);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    Promise.all([getOverview(), getLeadsTimeseries(30)])
-      .then(([overview, ts]) => {
+    Promise.all([getOverview(), getLeadsTimeseries(30), getTraffic(30)])
+      .then(([overview, ts, tr]) => {
         setData(overview);
         setSeries(ts.series || []);
+        setTraffic(tr);
       })
       .catch((err) => setError(err.message || 'Failed to load analytics'))
       .finally(() => setLoading(false));
@@ -68,6 +70,52 @@ export default function DashboardOverview() {
           ))}
         </div>
       </div>
+
+      {traffic && (
+        <>
+          <div className="dash-kpi-grid">
+            <div className="dash-kpi">
+              <div className="dash-kpi-label">Page views (30d)</div>
+              <div className="dash-kpi-value">{traffic.totalViews}</div>
+            </div>
+            <div className="dash-kpi">
+              <div className="dash-kpi-label">Unique visitors (30d)</div>
+              <div className="dash-kpi-value">{traffic.uniqueVisitors}</div>
+            </div>
+          </div>
+
+          <div className="dash-panel">
+            <div className="dash-panel-title">Page views — last 30 days</div>
+            <div className="dash-chart">
+              {(() => {
+                const maxViews = Math.max(1, ...traffic.series.map((d) => d.count));
+                return traffic.series.map((d) => (
+                  <div className="dash-chart-bar-wrap" key={d.date} title={`${d.date}: ${d.count}`}>
+                    <div className="dash-chart-bar" style={{ height: `${(d.count / maxViews) * 100}%` }} />
+                    <span className="dash-chart-label">
+                      {new Date(d.date).getDate() % 5 === 0 ? new Date(d.date).getDate() : ''}
+                    </span>
+                  </div>
+                ));
+              })()}
+            </div>
+          </div>
+
+          <div className="dash-panel">
+            <div className="dash-panel-title">Top pages (30d)</div>
+            {traffic.topPages.length === 0 ? (
+              <p className="dash-msg">No page views recorded yet.</p>
+            ) : (
+              traffic.topPages.map((p) => (
+                <div className="dash-breakdown-row" key={p.path}>
+                  <span>{p.path}</span>
+                  <span>{p.count}</span>
+                </div>
+              ))
+            )}
+          </div>
+        </>
+      )}
 
       <div className="dash-panel">
         <div className="dash-panel-title">Breakdowns</div>

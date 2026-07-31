@@ -4,6 +4,7 @@ import { Analytics } from "@vercel/analytics/next";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
 import { AuthProvider } from "../lib/auth-context";
+import PageViewTracker from "../components/PageViewTracker";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -29,6 +30,7 @@ export default function RootLayout({ children }) {
           {children}
           <Footer />
         </AuthProvider>
+        <PageViewTracker />
         <Analytics />
       </body>
     </html>

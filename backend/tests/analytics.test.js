@@ -26,3 +26,20 @@ test('GET /api/analytics/overview with invalid token returns 401', async () => {
     .set('Cookie', 'buzzap_token=not-a-real-jwt');
   assert.strictEqual(res.status, 401);
 });
+
+test('GET /api/analytics/traffic returns 401 without auth', async () => {
+  const res = await request(app).get('/api/analytics/traffic');
+  assert.strictEqual(res.status, 401);
+});
+
+// The page-view beacon is PUBLIC (no auth) — validation still applies.
+test('POST /api/analytics/pageview rejects an empty body with 400', async () => {
+  const res = await request(app).post('/api/analytics/pageview').send({});
+  assert.strictEqual(res.status, 400);
+  assert.strictEqual(res.body.status, 'error');
+});
+
+test('POST /api/analytics/pageview does not require auth (400 on bad body, not 401)', async () => {
+  const res = await request(app).post('/api/analytics/pageview').send({ path: '' });
+  assert.notStrictEqual(res.status, 401);
+});
