@@ -58,6 +58,12 @@ function createApp() {
   });
   app.use('/api', apiLimiter);
 
+  // Root + health-style ping (Render/uptime checks hit '/'). Returns 200 so
+  // platform health checks don't log as 404s.
+  app.get('/', (req, res) => {
+    res.status(200).json({ status: 'ok', service: 'buzzaphq-api' });
+  });
+
   // Routes.
   app.use('/api/health', healthRoutes);
   app.use('/api/auth', authRoutes);

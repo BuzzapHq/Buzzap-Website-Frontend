@@ -1,6 +1,12 @@
 // Central API client for talking to the backend Express server.
 // Base URL comes from NEXT_PUBLIC_API_URL (set in .env.local); defaults to local dev.
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+// Prefer the explicit env var. Fall back to the deployed API in production,
+// and to the local server during development.
+const API_BASE =
+  process.env.NEXT_PUBLIC_API_URL ||
+  (process.env.NODE_ENV === 'production'
+    ? 'https://buzzap-website-frontend.onrender.com'
+    : 'http://localhost:5000');
 
 /**
  * Perform a JSON request against the API.

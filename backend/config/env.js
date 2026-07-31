@@ -38,6 +38,10 @@ const envSchema = z.object({
   ADMIN_EMAIL: z.preprocess((v) => (v === '' ? undefined : v), z.string().email().optional()),
   ADMIN_PASSWORD: z.preprocess((v) => (v === '' ? undefined : v), z.string().min(8).optional()),
   ADMIN_NAME: z.string().optional(),
+  // Auto-create the admin on server startup (useful on hosts without shell access, e.g. Render free tier).
+  SEED_ADMIN_ON_START: z
+    .preprocess((v) => (v === '' ? undefined : v), z.enum(['true', 'false']).optional())
+    .transform((v) => v === 'true'),
 });
 
 const parsed = envSchema.safeParse(process.env);

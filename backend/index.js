@@ -2,10 +2,16 @@ const config = require('./config/env');
 const connectDB = require('./config/db');
 const createApp = require('./app');
 const logger = require('./utils/logger');
+const ensureAdmin = require('./services/ensureAdmin');
 
 // Bootstrap: validate env (on require) -> connect DB -> start HTTP server.
 async function start() {
   await connectDB();
+
+  // On hosts without shell access (Render free tier), auto-create the admin.
+  if (config.SEED_ADMIN_ON_START) {
+    await ensureAdmin();
+  }
 
   const app = createApp();
   const server = app.listen(config.PORT, () => {
