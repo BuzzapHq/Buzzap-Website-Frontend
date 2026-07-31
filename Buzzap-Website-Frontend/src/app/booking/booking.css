@@ -1,0 +1,78 @@
+.booking-viewport {
+  position: relative;
+  background: #020617;
+  min-height: 100vh;
+  padding-top: 96px;
+}
+
+.booking-glow {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 800px;
+  height: 400px;
+  background: radial-gradient(ellipse, rgba(37, 99, 235, 0.1) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.booking-wrapper {
+  position: relative;
+  z-index: 2;
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 48px 24px 80px;
+}
+
+.booking-header {
+  margin-bottom: 40px;
+}
+
+.booking-badge {
+  display: inline-block;
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #334155;
+  margin-bottom: 14px;
+}
+
+.booking-title {
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(28px, 4vw, 46px);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: #fff;
+  line-height: 1.1;
+  margin-bottom: 12px;
+}
+
+.booking-title-accent {
+  color: #2563eb;
+}
+
+.booking-subtitle {
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  line-height: 1.7;
+  color: #475569;
+  max-width: 500px;
+}
+
+.booking-cal-embed {
+  width: 100%;
+  min-height: 680px;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.booking-trust {
+  margin-top: 20px;
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  color: #1e293b;
+}

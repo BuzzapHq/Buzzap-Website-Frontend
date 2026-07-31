@@ -1,0 +1,242 @@
+'use client';
+import { useRef } from 'react';
+import { motion, useMotionValue, useTransform, useSpring } from 'framer-motion';
+import { ArrowRight, ArrowUpRight, BarChart2, Search, Cpu, MessageSquare, PenTool, Layers, CheckCircle } from 'lucide-react';
+import Link from 'next/link';
+import Image from 'next/image';
+import './service.css';
+
+const services = [
+  {
+    id: 'ai-marketing',
+    icon: BarChart2,
+    label: '01',
+    title: 'AI Marketing',
+    tagline: 'Campaigns that run themselves.',
+    desc: 'We deploy AI-powered marketing infrastructure that captures leads across every channel, nurtures them automatically, and pushes ready-to-buy prospects directly into your pipeline.',
+    bullets: ['Meta & Google Ads automation', 'AI-driven ad copy and creative testing', 'Multi-channel lead capture systems', 'Automated email and SMS sequences', 'Real-time campaign performance dashboards'],
+    image: '/product2.jpeg',
+    color: '#818cf8',
+  },
+  {
+    id: 'brand-boost-seo',
+    icon: Search,
+    label: '02',
+    title: 'Brand Boost & SEO',
+    tagline: 'Visibility that compounds.',
+    desc: 'From technical SEO audits to full brand identity systems, we position your business to dominate search rankings and command authority in your market.',
+    bullets: ['Technical SEO audit and implementation', 'Keyword strategy and content architecture', 'Brand identity and positioning', 'Local SEO and Google Business optimisation', 'Authority link building campaigns'],
+    image: '/social.jpeg',
+    color: '#10b981',
+  },
+  {
+    id: 'crm-automation',
+    icon: Layers,
+    label: '03',
+    title: 'CRM & Lead Automation',
+    tagline: 'Your pipeline, fully automated.',
+    desc: 'We integrate your CRM, forms, ads, WhatsApp, and email into one automated system. Every lead is captured, enriched, scored, and followed up in minutes.',
+    bullets: ['CRM setup and full configuration', 'Automated lead routing and scoring', 'WhatsApp and SMS follow-up sequences', 'Pipeline stage automation', 'Zoho, HubSpot, and Apollo.io integrations'],
+    image: '/product3.jpeg',
+    color: '#f59e0b',
+  },
+  {
+    id: 'ai-agents',
+    icon: Cpu,
+    label: '04',
+    title: 'AI Agents & Chatbots',
+    tagline: 'Always available. Never off script.',
+    desc: 'Custom AI agents trained on your business that handle enquiries, qualify leads, book appointments, and manage customer service — 24/7 across WhatsApp, web, and voice.',
+    bullets: ['Custom-trained chatbots (Voiceflow, Vapi)', 'WhatsApp AI agents', 'Voice AI for inbound and outbound calls', 'Appointment booking automation via Cal.com', 'Handoff to human agents when needed'],
+    image: '/ai.jpeg',
+    color: '#c084fc',
+  },
+  {
+    id: 'content-strategy',
+    icon: PenTool,
+    label: '05',
+    title: 'Content & Creative Strategy',
+    tagline: 'Content that converts.',
+    desc: 'We build AI-assisted content pipelines that produce high-quality blog posts, social content, ad creative, and video scripts at scale — aligned to your brand voice.',
+    bullets: ['AI-accelerated blog and SEO content', 'Social media content calendars', 'Ad copywriting and creative briefs', 'Video scripts and UGC frameworks', 'Email newsletter production'],
+    image: '/product4.jpeg',
+    color: '#f43f5e',
+  },
+  {
+    id: 'growth-consulting',
+    icon: MessageSquare,
+    label: '06',
+    title: 'Growth Consulting',
+    tagline: 'Strategy before execution.',
+    desc: 'Before we build anything, we audit where your current systems are breaking down. Our consulting engagements identify your highest-leverage opportunities.',
+    bullets: ['Full business growth audit', 'Revenue gap analysis', 'AI readiness assessment', 'Custom automation roadmap', 'Monthly strategy and performance reviews'],
+    image: '/buzz.jpeg',
+    color: '#06b6d4',
+  },
+];
+
+const processSteps = [
+  { n: '01', title: 'Audit', desc: 'We analyse your current marketing, sales, and operations stack to identify where you are losing revenue.' },
+  { n: '02', title: 'Architect', desc: 'We design a custom growth system — selecting the right tools, automations, and channels for your business.' },
+  { n: '03', title: 'Build', desc: 'Our team deploys your AI infrastructure end-to-end — CRM, ads, automations, agents, and content systems.' },
+  { n: '04', title: 'Optimise', desc: 'We monitor performance weekly and continuously refine every lever — so your results compound over time.' },
+];
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 28, filter: 'blur(6px)' },
+  visible: (i = 0) => ({
+    opacity: 1, y: 0, filter: 'blur(0px)',
+    transition: { delay: i * 0.08, duration: 0.6, ease: [0.16, 1, 0.3, 1] },
+  }),
+};
+
+/* 3D tilt card */
+function TiltCard({ children, className = '' }) {
+  const ref = useRef(null);
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+  const rotateX = useSpring(useTransform(y, [-0.5, 0.5], [6, -6]), { stiffness: 200, damping: 25 });
+  const rotateY = useSpring(useTransform(x, [-0.5, 0.5], [-6, 6]), { stiffness: 200, damping: 25 });
+
+  const handleMouseMove = (e) => {
+    if (!ref.current) return;
+    const rect = ref.current.getBoundingClientRect();
+    x.set((e.clientX - rect.left) / rect.width - 0.5);
+    y.set((e.clientY - rect.top) / rect.height - 0.5);
+  };
+
+  const handleMouseLeave = () => {
+    x.set(0); y.set(0);
+  };
+
+  return (
+    <motion.div
+      ref={ref}
+      className={className}
+      style={{ rotateX, rotateY, transformStyle: 'preserve-3d' }}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
+export default function ServicesPage() {
+  return (
+    <main className="svc-page">
+
+      {/* Hero */}
+      <section className="svc-hero">
+        <div className="svc-hero-glow" />
+        <div className="svc-hero-grid" />
+        <div className="svc-hero-inner">
+          <motion.span className="svc-label" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}>
+            Services
+          </motion.span>
+          <motion.h1 className="svc-hero-title" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={1}>
+            Everything your business needs<br />
+            <span className="svc-hero-muted">to grow on autopilot.</span>
+          </motion.h1>
+          <motion.p className="svc-hero-desc" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={2}>
+            Buzzap combines AI marketing, SEO, CRM automation, and intelligent agents into one
+            cohesive growth system — built specifically for your business.
+          </motion.p>
+          <motion.div className="svc-hero-actions" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={3}>
+            <Link href="/booking" className="svc-btn-primary">Get a Free Audit <ArrowRight size={16} /></Link>
+            <Link href="/case-studies" className="svc-btn-ghost">View case studies <ArrowUpRight size={16} /></Link>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Services grid */}
+      <section className="svc-grid-section">
+        <div className="svc-container">
+          <div className="svc-grid">
+            {services.map((s, i) => {
+              const Icon = s.icon;
+              return (
+                <motion.div
+                  key={s.id}
+                  id={s.id}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true, amount: 0.08 }}
+                  variants={fadeUp}
+                  custom={i % 2}
+                >
+                  <TiltCard className="svc-card">
+                    {/* Image header */}
+                    <div className="svc-card-img-wrap" style={{ '--svc-color': s.color }}>
+                      <Image src={s.image} alt={s.title} fill className="svc-card-img" />
+                      <div className="svc-card-img-overlay" />
+                      <div className="svc-card-img-label">
+                        <div className="svc-card-icon">
+                          <Icon size={16} strokeWidth={1.5} />
+                        </div>
+                        <span className="svc-card-num">{s.label}</span>
+                      </div>
+                    </div>
+
+                    <div className="svc-card-body">
+                      <h2 className="svc-card-title" style={{ '--svc-color': s.color }}>{s.title}</h2>
+                      <p className="svc-card-tagline" style={{ color: s.color }}>{s.tagline}</p>
+                      <p className="svc-card-desc">{s.desc}</p>
+                      <ul className="svc-bullets">
+                        {s.bullets.map((b, bi) => (
+                          <li key={bi}>
+                            <CheckCircle size={12} className="svc-check" style={{ color: s.color }} />
+                            {b}
+                          </li>
+                        ))}
+                      </ul>
+                      <div className="svc-card-footer">
+                        <Link href="/booking" className="svc-card-link" style={{ '--svc-color': s.color }}>
+                          Get started <ArrowRight size={13} />
+                        </Link>
+                      </div>
+                    </div>
+
+                    {/* Corner glow */}
+                    <div className="svc-card-glow" style={{ background: `radial-gradient(circle, ${s.color}15 0%, transparent 70%)` }} />
+                  </TiltCard>
+                </motion.div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* Process */}
+      <section className="svc-process-section">
+        <div className="svc-container">
+          <div className="svc-process-header">
+            <span className="svc-label">How it works</span>
+            <h2 className="svc-section-title">A process built for results,<br /><span className="svc-muted">not activity.</span></h2>
+          </div>
+          <div className="svc-process-grid">
+            {processSteps.map((step, i) => (
+              <motion.div key={i} className="svc-step" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={i} whileHover={{ y: -4 }}>
+                <span className="svc-step-num">{step.n}</span>
+                <h3 className="svc-step-title">{step.title}</h3>
+                <p className="svc-step-desc">{step.desc}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section className="svc-cta-section">
+        <div className="svc-container">
+          <div className="svc-cta-inner">
+            <span className="svc-label">Ready to start</span>
+            <h2 className="svc-section-title">Let&apos;s build your<br /><span className="svc-muted">growth system.</span></h2>
+            <p className="svc-cta-desc">Book a free 30-minute strategy call. We&apos;ll audit your current setup and show you exactly where you&apos;re leaving revenue on the table.</p>
+            <Link href="/booking" className="svc-btn-primary">Book a Free Call <ArrowRight size={16} /></Link>
+          </div>
+        </div>
+      </section>
+    </main>
+  );
+}
