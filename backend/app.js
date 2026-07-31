@@ -33,7 +33,11 @@ function createApp() {
         // Allow non-browser clients (curl, server-to-server) that send no Origin.
         if (!origin) return cb(null, true);
         if (config.CLIENT_ORIGINS.includes(origin)) return cb(null, true);
-        return cb(new Error('Not allowed by CORS'));
+        // Disallowed origin: resolve false (no CORS headers) rather than throwing.
+        // Throwing bubbles to the error handler as a 500; returning false lets the
+        // browser surface a clean CORS block and logs the offending origin for us.
+        logger.warn(`CORS blocked origin: ${origin}`);
+        return cb(null, false);
       },
       credentials: true,
     })
