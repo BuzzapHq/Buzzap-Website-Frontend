@@ -2,10 +2,16 @@ const jwt = require('jsonwebtoken');
 const config = require('../config/env');
 
 const COOKIE_NAME = 'buzzap_token';
+
+// When the frontend and API are on different domains (e.g. Vercel + Render),
+// the auth cookie is cross-site: browsers only send it if sameSite='none' AND
+// secure=true. Enable via COOKIE_CROSS_SITE=true. Otherwise default to the
+// safer same-site 'lax' (works when both are same-origin or during local dev).
+const crossSite = config.COOKIE_CROSS_SITE;
 const COOKIE_OPTIONS = {
   httpOnly: true,
-  secure: config.NODE_ENV === 'production',
-  sameSite: 'strict',
+  secure: crossSite || config.NODE_ENV === 'production',
+  sameSite: crossSite ? 'none' : 'lax',
   maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days in ms
 };
 

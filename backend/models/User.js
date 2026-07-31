@@ -44,12 +44,13 @@ const userSchema = new mongoose.Schema(
 );
 
 // Hash password whenever it's set/changed.
-userSchema.pre('save', async function hashPassword(next) {
-  if (!this.isModified('password')) return next();
+// NOTE: async middleware must NOT call next() — Mongoose awaits the returned
+// promise and passes no next arg (calling it throws "next is not a function").
+userSchema.pre('save', async function hashPassword() {
+  if (!this.isModified('password')) return;
   this.password = await bcrypt.hash(this.password, SALT_ROUNDS);
   // Set slightly in the past so tokens issued right after aren't invalidated by clock skew.
   this.passwordChangedAt = new Date(Date.now() - 1000);
-  next();
 });
 
 userSchema.methods.comparePassword = function comparePassword(candidate) {

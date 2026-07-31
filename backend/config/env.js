@@ -42,6 +42,11 @@ const envSchema = z.object({
   SEED_ADMIN_ON_START: z
     .preprocess((v) => (v === '' ? undefined : v), z.enum(['true', 'false']).optional())
     .transform((v) => v === 'true'),
+  // Set true when frontend & API are on different domains (Vercel + Render) so
+  // the auth cookie uses sameSite=none; secure — required for cross-site cookies.
+  COOKIE_CROSS_SITE: z
+    .preprocess((v) => (v === '' ? undefined : v), z.enum(['true', 'false']).optional())
+    .transform((v) => v === 'true'),
 });
 
 const parsed = envSchema.safeParse(process.env);
