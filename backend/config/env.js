@@ -10,6 +10,9 @@ const envSchema = z.object({
     .enum(['development', 'test', 'production'])
     .default('development'),
   PORT: z.coerce.number().int().positive().default(5000),
+  // Number of proxy hops to trust for client IP (X-Forwarded-For). 0 = don't
+  // trust any (local dev). Set to 1 on Render/Cloudflare so rate limiting works.
+  TRUST_PROXY: z.coerce.number().int().min(0).max(10).default(0),
   // May be a single origin or a comma-separated list (dev + prod domains).
   // Parsed into CLIENT_ORIGINS[] below; CLIENT_URL is normalized to the first one.
   CLIENT_URL: z.string().default('http://localhost:3000'),

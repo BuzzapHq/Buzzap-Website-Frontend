@@ -23,6 +23,14 @@ const pricingRoutes = require('./routes/pricing.routes');
 function createApp() {
   const app = express();
 
+  // Behind a hosting proxy (Render/Cloudflare), the client IP arrives in
+  // X-Forwarded-For. Trust exactly one hop so express-rate-limit can identify
+  // clients correctly. NOT `true` — that would trust a client-spoofed header
+  // and let attackers dodge rate limits by forging the IP.
+  if (config.TRUST_PROXY) {
+    app.set('trust proxy', config.TRUST_PROXY);
+  }
+
   // Security headers.
   app.use(helmet());
 
