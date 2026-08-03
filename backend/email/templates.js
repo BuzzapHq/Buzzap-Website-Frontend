@@ -36,7 +36,7 @@ function welcomeEmail(name) {
     html: layout(
       `Welcome, ${safeName}!`,
       `<p>Your account is ready. You can now sign in and access your client dashboard.</p>
-       <p style="margin-top:24px;">${button(config.CLIENT_URL, 'Go to dashboard')}</p>`
+      <p style="margin-top:24px;">${button(config.CLIENT_URL, 'Go to dashboard')}</p>`
     ),
     text: `Welcome, ${safeName}! Your ${brand.name} account is ready. Visit ${config.CLIENT_URL} to sign in.`,
   };
@@ -49,9 +49,9 @@ function passwordResetEmail(name, resetUrl) {
     html: layout(
       'Reset your password',
       `<p>Hi ${safeName}, we received a request to reset your password.</p>
-       <p>This link expires in 30 minutes. If you didn't request it, you can ignore this email.</p>
-       <p style="margin-top:24px;">${button(resetUrl, 'Reset password')}</p>
-       <p style="margin-top:16px;color:#64748b;font-size:13px;word-break:break-all;">${resetUrl}</p>`
+      <p>This link expires in 30 minutes. If you didn't request it, you can ignore this email.</p>
+      <p style="margin-top:24px;">${button(resetUrl, 'Reset password')}</p>
+      <p style="margin-top:16px;color:#64748b;font-size:13px;word-break:break-all;">${resetUrl}</p>`
     ),
     text: `Hi ${safeName}, reset your ${brand.name} password using this link (expires in 30 min): ${resetUrl}`,
   };
@@ -65,8 +65,8 @@ function leadConfirmationEmail(name) {
     html: layout(
       `Thanks, ${safeName}!`,
       `<p>We've received your inquiry and a member of our team will get back to you shortly.</p>
-       <p>In the meantime, feel free to explore what we do.</p>
-       <p style="margin-top:24px;">${button(config.CLIENT_URL, 'Visit our site')}</p>`
+      <p>In the meantime, feel free to explore what we do.</p>
+      <p style="margin-top:24px;">${button(config.CLIENT_URL, 'Visit our site')}</p>`
     ),
     text: `Thanks, ${safeName}! We've received your inquiry and will get back to you shortly.`,
   };
@@ -95,8 +95,8 @@ function newLeadNotificationEmail(lead) {
     html: layout(
       'New lead received',
       `<table style="border-collapse:collapse;font-size:14px;">${rows}</table>
-       ${lead.message ? `<p style="margin-top:16px;white-space:pre-wrap;">${lead.message}</p>` : ''}
-       <p style="margin-top:24px;">${button(`${config.CLIENT_URL}/admin/leads`, 'Open admin')}</p>`
+      ${lead.message ? `<p style="margin-top:16px;white-space:pre-wrap;">${lead.message}</p>` : ''}
+      <p style="margin-top:24px;">${button(`${config.CLIENT_URL}/admin/leads`, 'Open admin')}</p>`
     ),
     text: `New lead: ${lead.name} <${lead.email}>${lead.company ? ` — ${lead.company}` : ''}\n${lead.message || ''}`,
   };
