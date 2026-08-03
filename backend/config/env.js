@@ -34,6 +34,11 @@ const envSchema = z.object({
     (v) => (v === '' ? undefined : v),
     z.string().email().optional()
   ),
+  // Optional email destination for in-app notifications (messages, projects, assets).
+  NOTIFY_EMAIL_ALERTS_TO: z.preprocess(
+    (v) => (v === '' ? undefined : v),
+    z.string().email().optional()
+  ),
 
   CLOUDINARY_URL: z.string().optional(),
 

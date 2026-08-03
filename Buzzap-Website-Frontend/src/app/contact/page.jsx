@@ -10,7 +10,7 @@ const contactInfo = [
   {
     icon: Mail,
     label: 'Email',
-    primary: 'hello@buzzap.agency',
+    primary: 'hello@buzzaphq.com',
     secondary: 'We reply within one business day.',
   },
   {

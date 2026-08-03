@@ -34,15 +34,15 @@ const sections = [
   },
   {
     title: '8. Your Rights',
-    body: `Depending on your location, you may have the following rights regarding your personal data: Access — the right to request a copy of your data. Rectification — the right to correct inaccurate data. Erasure — the right to request deletion of your data. Restriction — the right to limit how we use your data. Portability — the right to receive your data in a structured, machine-readable format. Objection — the right to object to processing based on legitimate interests. Withdraw Consent — where processing is based on consent, you can withdraw it at any time. To exercise these rights, contact us at privacy@buzzap.agency. We will respond within 30 days.`,
+    body: `Depending on your location, you may have the following rights regarding your personal data: Access — the right to request a copy of your data. Rectification — the right to correct inaccurate data. Erasure — the right to request deletion of your data. Restriction — the right to limit how we use your data. Portability — the right to receive your data in a structured, machine-readable format. Objection — the right to object to processing based on legitimate interests. Withdraw Consent — where processing is based on consent, you can withdraw it at any time. To exercise these rights, contact us at privacy@buzzaphq.com. We will respond within 30 days.`,
   },
   {
     title: '9. Security',
-    body: `We implement appropriate technical and organisational measures to protect your personal data against unauthorised access, loss, destruction, or alteration. These measures include: TLS encryption for data in transit, AES-256 encryption for data at rest, access controls and role-based permissions, regular security assessments, and staff training on data protection. While we take security seriously, no method of transmission or storage is 100% secure. If you suspect a security incident involving your data, contact us immediately at security@buzzap.agency.`,
+    body: `We implement appropriate technical and organisational measures to protect your personal data against unauthorised access, loss, destruction, or alteration. These measures include: TLS encryption for data in transit, AES-256 encryption for data at rest, access controls and role-based permissions, regular security assessments, and staff training on data protection. While we take security seriously, no method of transmission or storage is 100% secure. If you suspect a security incident involving your data, contact us immediately at security@buzzaphq.com.`,
   },
   {
     title: '10. Children\'s Privacy',
-    body: `Our services are not directed to individuals under the age of 16. We do not knowingly collect personal data from children. If we become aware that we have collected personal data from a child without parental consent, we will take steps to delete that information as quickly as possible. If you believe we may have collected information from a child, please contact us at privacy@buzzap.agency.`,
+    body: `Our services are not directed to individuals under the age of 16. We do not knowingly collect personal data from children. If we become aware that we have collected personal data from a child without parental consent, we will take steps to delete that information as quickly as possible. If you believe we may have collected information from a child, please contact us at privacy@buzzaphq.com.`,
   },
   {
     title: '11. Changes to This Policy',
@@ -50,7 +50,7 @@ const sections = [
   },
   {
     title: '12. Contact Us',
-    body: `For questions, requests, or complaints about this Privacy Policy or our data practices, contact our Data Protection Officer at privacy@buzzap.agency. You also have the right to lodge a complaint with your local data protection authority if you believe we have not handled your data appropriately.`,
+    body: `For questions, requests, or complaints about this Privacy Policy or our data practices, contact our Data Protection Officer at privacy@buzzaphq.com. You also have the right to lodge a complaint with your local data protection authority if you believe we have not handled your data appropriately.`,
   },
 ];
 
@@ -75,7 +75,7 @@ export default function PrivacyPage() {
           </motion.p>
           <motion.p className="privacy-intro" variants={fadeUp} custom={3} initial="hidden" whileInView="visible" viewport={{ once: true }}>
             This policy explains how Buzzap Agency collects, uses, and protects your personal
-            data. Questions? Email <a href="mailto:privacy@buzzap.agency">privacy@buzzap.agency</a>.
+            data. Questions? Email <a href="mailto:privacy@buzzaphq.com">privacy@buzzaphq.com</a>.
           </motion.p>
         </div>
       </section>

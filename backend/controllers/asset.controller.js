@@ -51,6 +51,7 @@ const uploadAsset = asyncHandler(async (req, res) => {
     title: 'File uploaded',
     message: `${req.file.originalname} was added to "${project.title}"`,
     link: `/dashboard/projects/${project._id}`,
+    email: true,
   }).catch(() => {});
 
   res.status(201).json({ status: 'success', asset });

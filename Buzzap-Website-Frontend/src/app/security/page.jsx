@@ -124,7 +124,7 @@ export default function SecurityPage() {
               </h2>
               <p className="sec-disclosure-text">
                 If you discover a security vulnerability in our systems, please report it
-                to <a href="mailto:security@buzzap.agency" className="sec-link">security@buzzap.agency</a>.
+                to <a href="mailto:security@buzzaphq.com" className="sec-link">security@buzzaphq.com</a>.
                 We commit to acknowledging your report within 24 hours, investigating within 72 hours,
                 and keeping you informed throughout the remediation process. We do not pursue legal action
                 against researchers acting in good faith.

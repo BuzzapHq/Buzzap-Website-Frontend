@@ -78,7 +78,6 @@ export default function MarkdownContent({ content }) {
         if (seg.type === 'video') {
           return (
             <div className="md-embed" key={i}>
-              {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
               <video src={seg.value} controls preload="metadata" />
             </div>
           );

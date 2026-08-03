@@ -1,5 +1,5 @@
 'use client';
-import { useRef, useState } from 'react';
+import { useId, useState } from 'react';
 import { Bold, Italic, Heading, Link2, Image as ImageIcon, PlayCircle, Film, List, Quote, Code } from 'lucide-react';
 import { uploadBlogImage } from '@/lib/api';
 import './markdown-editor.css';
@@ -9,13 +9,15 @@ import './markdown-editor.css';
 // YouTube/video use a custom directive the renderer understands:
 //   @youtube[VIDEO_ID_OR_URL]   @video[URL]
 export default function MarkdownEditor({ value, onChange, rows = 14 }) {
-  const ref = useRef(null);
+  const textareaId = useId();
   const [uploading, setUploading] = useState(false);
   const [uploadError, setUploadError] = useState('');
 
+  const getTextarea = () => document.getElementById(textareaId);
+
   // Insert text around/at the current selection and keep focus.
   const surround = (before, after = '', placeholder = '') => {
-    const el = ref.current;
+    const el = getTextarea();
     if (!el) return;
     const start = el.selectionStart;
     const end = el.selectionEnd;
@@ -31,7 +33,7 @@ export default function MarkdownEditor({ value, onChange, rows = 14 }) {
   };
 
   const insertBlock = (text) => {
-    const el = ref.current;
+    const el = getTextarea();
     if (!el) return;
     const start = el.selectionStart;
     // Ensure the block sits on its own line.
@@ -107,7 +109,7 @@ export default function MarkdownEditor({ value, onChange, rows = 14 }) {
       </div>
 
       <textarea
-        ref={ref}
+        id={textareaId}
         className="md-textarea"
         rows={rows}
         value={value}

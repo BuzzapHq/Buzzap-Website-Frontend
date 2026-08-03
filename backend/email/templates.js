@@ -102,9 +102,24 @@ function newLeadNotificationEmail(lead) {
   };
 }
 
+function notificationAlertEmail(notification) {
+  const link = notification.link || config.CLIENT_URL;
+  return {
+    subject: `Buzzap alert: ${notification.title}`,
+    html: layout(
+      notification.title,
+      `<p>You have a new ${notification.type.replace(/_/g, ' ')} alert.</p>
+      ${notification.message ? `<p style="margin-top:12px;white-space:pre-wrap;">${notification.message}</p>` : ''}
+      ${link ? `<p style="margin-top:24px;">${button(link, 'Open Buzzap')}</p>` : ''}`
+    ),
+    text: `${notification.title}\n${notification.message || ''}\n${link || ''}`,
+  };
+}
+
 module.exports = {
   welcomeEmail,
   passwordResetEmail,
   leadConfirmationEmail,
   newLeadNotificationEmail,
+  notificationAlertEmail,
 };

@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowUpRight, Clock, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
-import { getPublishedPosts } from '@/lib/api';
+import { getPublishedPosts, submitLead } from '@/lib/api';
 import './insights.css';
 
 const tagColors = {
@@ -185,13 +185,53 @@ export default function InsightsPage() {
               <h2 className="ins-page-newsletter-title">Stay ahead of the curve.</h2>
               <p className="ins-page-newsletter-desc">Get our best insights delivered weekly. No fluff, no spam — just frameworks that work.</p>
             </div>
-            <form className="ins-page-newsletter-form" onSubmit={(e) => e.preventDefault()}>
-              <input type="email" placeholder="your@email.com" className="ins-page-newsletter-input" required />
-              <button type="submit" className="ins-page-newsletter-btn">Subscribe</button>
-            </form>
+            <NewsletterForm />
           </div>
         </div>
       </section>
     </main>
+  );
+}
+
+// Newsletter signup — posts to the leads API (source: newsletter), like the footer.
+function NewsletterForm() {
+  const [email, setEmail] = useState('');
+  const [status, setStatus] = useState('idle'); // idle | loading | done | error
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (status === 'loading') return;
+    setStatus('loading');
+    try {
+      const name = email.split('@')[0] || 'Subscriber';
+      await submitLead({ name, email, source: 'newsletter' });
+      setStatus('done');
+      setEmail('');
+    } catch {
+      setStatus('error');
+    }
+  };
+
+  if (status === 'done') {
+    return <p className="ins-page-newsletter-desc">Thanks — you&apos;re on the list!</p>;
+  }
+
+  return (
+    <form className="ins-page-newsletter-form" onSubmit={handleSubmit}>
+      <input
+        type="email"
+        placeholder="your@email.com"
+        className="ins-page-newsletter-input"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        required
+      />
+      <button type="submit" className="ins-page-newsletter-btn" disabled={status === 'loading'}>
+        {status === 'loading' ? '…' : 'Subscribe'}
+      </button>
+      {status === 'error' && (
+        <span className="dash-error" style={{ fontSize: 12 }}>Something went wrong.</span>
+      )}
+    </form>
   );
 }

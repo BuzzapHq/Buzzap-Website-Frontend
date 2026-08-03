@@ -77,6 +77,7 @@ const sendMessage = asyncHandler(async (req, res) => {
         title: 'New message',
         message: `${req.user.name}: ${req.body.body.slice(0, 80)}`,
         link: `/dashboard/messages/${conversation._id}`,
+        email: true,
       }).catch(() => {});
     });
 

@@ -22,6 +22,7 @@ const createProject = asyncHandler(async (req, res) => {
     title: 'Project created',
     message: `"${project.title}" for ${lead.name}`,
     link: `/dashboard/projects/${project._id}`,
+    email: true,
   }).catch(() => {});
 
   res.status(201).json({ status: 'success', project });
@@ -123,6 +124,7 @@ const updateMilestone = asyncHandler(async (req, res) => {
       title: 'Milestone completed',
       message: milestone.title,
       link: `/dashboard/projects/${req.params.id}`,
+      email: true,
     }).catch(() => {});
   }
 

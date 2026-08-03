@@ -58,7 +58,7 @@ const sections = [
   },
   {
     title: '14. Contact',
-    body: `For questions about these Terms, please contact us at legal@buzzap.agency or through the contact form on our website. Our mailing address is Buzzap Agency, Legal Department, San Francisco, California, United States.`,
+    body: `For questions about these Terms, please contact us at legal@buzzaphq.com or through the contact form on our website. Our mailing address is Buzzap Agency, Legal Department, San Francisco, California, United States.`,
   },
 ];
 
@@ -83,7 +83,7 @@ export default function TermsPage() {
           </motion.p>
           <motion.p className="terms-intro" variants={fadeUp} custom={3} initial="hidden" whileInView="visible" viewport={{ once: true }}>
             Please read these terms carefully before using Buzzap Agency&apos;s services.
-            If you have questions, email us at <a href="mailto:legal@buzzap.agency">legal@buzzap.agency</a>.
+            If you have questions, email us at <a href="mailto:legal@buzzaphq.com">legal@buzzaphq.com</a>.
           </motion.p>
         </div>
       </section>
