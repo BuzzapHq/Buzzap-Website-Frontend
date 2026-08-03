@@ -4,6 +4,7 @@ import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import { ArrowLeft, Clock } from 'lucide-react';
 import { getPostBySlug } from '@/lib/api';
+import MarkdownContent from '@/components/MarkdownContent';
 import './article.css';
 
 const formatDate = (d) =>
@@ -60,11 +61,9 @@ export default function ArticlePage() {
               <img src={post.coverImage} alt={post.title} className="article-cover" />
             )}
 
-            {/* Content is stored as plain text/markdown-ish; render with preserved line breaks. */}
+            {/* Rich Markdown content: text, images, and youtube/video embeds. */}
             <div className="article-content">
-              {post.content.split('\n').map((para, i) =>
-                para.trim() ? <p key={i}>{para}</p> : <br key={i} />
-              )}
+              <MarkdownContent content={post.content} />
             </div>
           </article>
         )}

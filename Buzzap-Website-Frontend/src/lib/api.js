@@ -174,6 +174,28 @@ export function updatePost(id, payload) {
 export function deletePost(id) {
   return apiFetch(`/api/blog/${id}`, { method: 'DELETE' });
 }
+// Upload an inline image for the Markdown editor; returns { url }.
+export async function uploadBlogImage(file) {
+  const fd = new FormData();
+  fd.append('file', file);
+  const res = await fetch(`${API_BASE}/api/blog/upload-image`, {
+    method: 'POST',
+    credentials: 'include',
+    body: fd,
+  });
+  let data = null;
+  try {
+    data = await res.json();
+  } catch {
+    /* empty */
+  }
+  if (!res.ok) {
+    const err = new Error(data?.message || `Upload failed (${res.status})`);
+    err.status = res.status;
+    throw err;
+  }
+  return data;
+}
 
 // --- Pricing ---
 export function getPublicPricing() {

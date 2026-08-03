@@ -42,6 +42,11 @@ test('DELETE /api/blog/:id returns 401 without auth', async () => {
   assert.strictEqual(res.status, 401);
 });
 
+test('POST /api/blog/upload-image returns 401 without auth', async () => {
+  const res = await request(app).post('/api/blog/upload-image');
+  assert.strictEqual(res.status, 401);
+});
+
 // ---- Messaging (admin-only) ----
 test('GET /api/conversations returns 401 without auth', async () => {
   const res = await request(app).get('/api/conversations');

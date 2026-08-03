@@ -2,6 +2,7 @@
 import { useEffect, useState, useCallback } from 'react';
 import { Plus, Trash2, Pencil } from 'lucide-react';
 import { getAllPosts, createPost, updatePost, deletePost } from '@/lib/api';
+import MarkdownEditor from '@/components/MarkdownEditor';
 
 const emptyForm = { title: '', excerpt: '', content: '', coverImage: '', tags: '', published: false };
 
@@ -192,7 +193,10 @@ export default function BlogAdminPage() {
               </div>
               <div className="dash-form-field">
                 <label htmlFor="content">Content</label>
-                <textarea id="content" name="content" rows={8} value={form.content} onChange={handleChange} required />
+                <MarkdownEditor
+                  value={form.content}
+                  onChange={(content) => setForm((f) => ({ ...f, content }))}
+                />
               </div>
               <label style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 13, color: 'var(--text-secondary)' }}>
                 <input type="checkbox" name="published" checked={form.published} onChange={handleChange} />
