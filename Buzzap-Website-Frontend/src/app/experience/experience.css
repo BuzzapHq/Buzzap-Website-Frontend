@@ -1,10 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap');
 
 .expMain {
-  background: #020617;
+  background: #080d1e;
   position: relative;
   overflow: hidden;
   color: #fff;
+  border-top: 1px solid rgba(99,102,241,0.08);
+  border-bottom: 1px solid rgba(99,102,241,0.08);
   padding-bottom: 120px;
 }
 

@@ -1,8 +1,9 @@
 .bs-section {
   position: relative;
-  background: #020617;
+  background: #080d1e;
   padding: 110px 24px 120px;
   border-top: 1px solid rgba(99,102,241,0.08);
+  border-bottom: 1px solid rgba(99,102,241,0.08);
   overflow: hidden;
 }
 
