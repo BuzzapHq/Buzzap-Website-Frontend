@@ -16,13 +16,13 @@ const contactInfo = [
   {
     icon: MapPin,
     label: 'Location',
-    primary: 'San Francisco, California',
+    primary: '7, Ikoyi Club Road, Ikoyi, Lagos.',
     secondary: 'Remote-first team. We work across all time zones.',
   },
   {
     icon: Clock,
     label: 'Working hours',
-    primary: 'Monday – Friday, 9am – 6pm PST',
+    primary: 'Monday – Friday, 9am – 6pm WAT',
     secondary: 'Urgent support available for active clients 24/7.',
   },
 ];

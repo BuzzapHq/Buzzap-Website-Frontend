@@ -17,6 +17,8 @@ const notificationRoutes = require('./routes/notification.routes');
 const blogRoutes = require('./routes/blog.routes');
 const messageRoutes = require('./routes/message.routes');
 const pricingRoutes = require('./routes/pricing.routes');
+const caseStudyRoutes = require('./routes/caseStudy.routes');
+const webhookRoutes = require('./routes/webhook.routes');
 
 // App factory: builds and returns the Express app WITHOUT starting a listener,
 // so tests can import it directly (supertest) and index.js owns the lifecycle.
@@ -86,6 +88,8 @@ function createApp() {
   app.use('/api/blog', blogRoutes);
   app.use('/api/conversations', messageRoutes);
   app.use('/api/pricing', pricingRoutes);
+  app.use('/api/case-studies', caseStudyRoutes);
+  app.use('/api/webhooks', webhookRoutes);
 
   // 404 + central error handler (must be last).
   app.use(notFound);

@@ -21,6 +21,24 @@ const blogPostSchema = new mongoose.Schema(
     published: { type: Boolean, default: false, index: true },
     publishedAt: Date,
     author: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+    reactions: {
+      like: { type: Number, default: 0 },
+      love: { type: Number, default: 0 },
+      insightful: { type: Number, default: 0 },
+      celebrate: { type: Number, default: 0 },
+      mindblown: { type: Number, default: 0 },
+    },
+    comments: [
+      {
+        _id: { type: mongoose.Schema.Types.ObjectId, default: () => new mongoose.Types.ObjectId() },
+        authorName: { type: String, required: true, trim: true },
+        authorAvatar: { type: String, default: '' },
+        content: { type: String, required: true, trim: true },
+        likes: { type: Number, default: 0 },
+        parentId: { type: mongoose.Schema.Types.ObjectId, default: null },
+        createdAt: { type: Date, default: Date.now },
+      },
+    ],
   },
   { timestamps: true }
 );

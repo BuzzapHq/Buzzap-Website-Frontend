@@ -2,7 +2,7 @@
 import { useEffect } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import Link from 'next/link';
-import { LayoutDashboard, Users, FolderKanban, FileText, MessageSquare, Tag, LogOut } from 'lucide-react';
+import { LayoutDashboard, Users, FolderKanban, FileText, MessageSquare, Tag, Award, LogOut } from 'lucide-react';
 import { useAuth } from '@/lib/auth-context';
 import NotificationBell from './NotificationBell';
 import './dashboard.css';
@@ -12,6 +12,7 @@ const navItems = [
   { href: '/dashboard/leads', label: 'Leads', icon: Users },
   { href: '/dashboard/projects', label: 'Projects', icon: FolderKanban },
   { href: '/dashboard/messages', label: 'Messages', icon: MessageSquare },
+  { href: '/dashboard/case-studies', label: 'Case Studies', icon: Award },
   { href: '/dashboard/blog', label: 'Blog', icon: FileText },
   { href: '/dashboard/pricing', label: 'Pricing', icon: Tag },
 ];

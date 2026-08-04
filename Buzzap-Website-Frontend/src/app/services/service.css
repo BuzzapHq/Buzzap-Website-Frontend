@@ -159,8 +159,9 @@
 /* ── Service card ── */
 .svc-card {
   position: relative;
-  background: rgba(8, 12, 32, 0.8);
-  border: 1px solid rgba(255,255,255,0.06);
+  background: rgba(10, 17, 40, 0.65);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(255,255,255,0.08);
   border-radius: 24px;
   overflow: hidden;
   transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
@@ -169,8 +170,8 @@
 }
 
 .svc-card:hover {
-  border-color: rgba(99,102,241,0.2);
-  box-shadow: 0 40px 80px rgba(0,0,0,0.5);
+  border-color: var(--svc-color, rgba(99,102,241,0.4));
+  box-shadow: 0 30px 60px rgba(0,0,0,0.5), 0 0 30px var(--svc-color, rgba(99,102,241,0.15));
 }
 
 /* Card image header */
@@ -226,7 +227,7 @@
   font-family: 'Space Grotesk', sans-serif;
   font-size: 11px;
   font-weight: 700;
-  color: rgba(255,255,255,0.3);
+  color: rgba(255,255,255,0.4);
   letter-spacing: 0.05em;
 }
 
@@ -255,13 +256,13 @@
   font-weight: 700;
   letter-spacing: 0.01em;
   margin-bottom: 16px;
-  opacity: 0.8;
+  opacity: 0.9;
 }
 
 .svc-card-desc {
   font-family: 'Inter', sans-serif;
   font-size: 13.5px;
-  color: #475569;
+  color: #94a3b8;
   line-height: 1.7;
   margin-bottom: 20px;
 }
@@ -281,7 +282,7 @@
   gap: 9px;
   font-family: 'Inter', sans-serif;
   font-size: 13px;
-  color: #64748b;
+  color: #cbd5e1;
   line-height: 1.4;
 }
 

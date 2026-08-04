@@ -1,8 +1,9 @@
 .sol-section {
   position: relative;
-  background: #020617;
+  background: #060b19;
   padding: 120px 48px;
-  border-top: 1px solid rgba(99,102,241,0.08);
+  border-top: 1px solid rgba(99,102,241,0.12);
+  border-bottom: 1px solid rgba(99,102,241,0.12);
   overflow: hidden;
 }
 
@@ -16,14 +17,14 @@
 .sol-orb-1 {
   width: 700px; height: 600px;
   top: -100px; left: -200px;
-  background: radial-gradient(ellipse, rgba(99,102,241,0.12) 0%, transparent 65%);
+  background: radial-gradient(ellipse, rgba(99,102,241,0.15) 0%, transparent 65%);
   animation: solOrb 12s ease-in-out infinite alternate;
 }
 
 .sol-orb-2 {
   width: 500px; height: 500px;
   bottom: -100px; right: -100px;
-  background: radial-gradient(ellipse, rgba(139,92,246,0.1) 0%, transparent 65%);
+  background: radial-gradient(ellipse, rgba(139,92,246,0.12) 0%, transparent 65%);
   animation: solOrb 16s ease-in-out infinite alternate-reverse;
 }
 
@@ -36,8 +37,8 @@
   position: absolute;
   inset: 0;
   background-image:
-    linear-gradient(rgba(99,102,241,0.022) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(99,102,241,0.022) 1px, transparent 1px);
+    linear-gradient(rgba(99,102,241,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(99,102,241,0.025) 1px, transparent 1px);
   background-size: 48px 48px;
   pointer-events: none;
 }
@@ -72,8 +73,8 @@
 .sol-img {
   object-fit: cover;
   border-radius: 28px;
-  border: 1px solid rgba(99,102,241,0.15);
-  box-shadow: 0 40px 80px rgba(0,0,0,0.6);
+  border: 1px solid rgba(99,102,241,0.2);
+  box-shadow: 0 40px 80px rgba(0,0,0,0.6), 0 0 40px rgba(99,102,241,0.1);
 }
 
 .sol-img-overlay {
@@ -82,8 +83,8 @@
   border-radius: 28px;
   background: linear-gradient(
     135deg,
-    rgba(2,6,23,0.15) 0%,
-    rgba(2,6,23,0.4) 100%
+    rgba(2,6,23,0.1) 0%,
+    rgba(2,6,23,0.35) 100%
   );
 }
 
@@ -92,27 +93,27 @@
   position: absolute;
   display: flex;
   align-items: center;
-  gap: 10px;
-  background: rgba(8, 12, 32, 0.9);
-  border: 1px solid rgba(255,255,255,0.08);
-  border-radius: 14px;
-  padding: 12px 16px;
+  gap: 12px;
+  background: rgba(15, 23, 42, 0.85);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 16px;
+  padding: 14px 18px;
   backdrop-filter: blur(16px);
-  box-shadow: 0 16px 32px rgba(0,0,0,0.5);
-  min-width: 160px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.5), 0 0 20px rgba(99,102,241,0.12);
+  min-width: 170px;
   z-index: 5;
 }
 
 .sol-metric-icon {
-  width: 30px; height: 30px;
-  border-radius: 8px;
+  width: 32px; height: 32px;
+  border-radius: 10px;
   display: flex; align-items: center; justify-content: center;
   flex-shrink: 0;
 }
 
 .sol-metric-value {
   font-family: 'Space Grotesk', sans-serif;
-  font-size: 18px;
+  font-size: 19px;
   font-weight: 800;
   letter-spacing: -0.03em;
   line-height: 1;
@@ -120,10 +121,10 @@
 
 .sol-metric-label {
   font-family: 'Inter', sans-serif;
-  font-size: 11px;
-  color: #475569;
+  font-size: 11.5px;
+  color: #cbd5e1;
   font-weight: 500;
-  margin-top: 2px;
+  margin-top: 3px;
 }
 
 /* Text side */
@@ -170,7 +171,7 @@
 .sol-desc {
   font-family: 'Inter', sans-serif;
   font-size: 16px;
-  color: #64748b;
+  color: #94a3b8;
   line-height: 1.78;
   margin-bottom: 32px;
 }
@@ -180,7 +181,7 @@
   padding: 0; margin: 0 0 40px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 14px;
 }
 
 .sol-bullets li {
@@ -188,9 +189,9 @@
   align-items: center;
   gap: 10px;
   font-family: 'Inter', sans-serif;
-  font-size: 14px;
+  font-size: 14.5px;
   font-weight: 500;
-  color: #94a3b8;
+  color: #cbd5e1;
 }
 
 .sol-check {
@@ -230,9 +231,9 @@
   font-family: 'Inter', sans-serif;
   font-size: 14px;
   font-weight: 600;
-  color: #475569;
+  color: #94a3b8;
   text-decoration: none;
-  border-bottom: 1px solid rgba(71,85,105,0.4);
+  border-bottom: 1px solid rgba(148,163,184,0.3);
   padding-bottom: 2px;
   transition: all 0.2s ease;
 }
@@ -248,7 +249,7 @@
 @media (max-width: 900px) {
   .sol-split { grid-template-columns: 1fr; }
   .sol-visual { height: 380px; margin-bottom: 24px; }
-  .sol-metric-card { display: none; }
+  .sol-metric-card { position: relative; top: auto !important; left: auto !important; right: auto !important; margin-top: 12px; }
 }
 
 @media (max-width: 640px) {

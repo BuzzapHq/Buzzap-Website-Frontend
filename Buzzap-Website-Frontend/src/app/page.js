@@ -27,7 +27,7 @@ export default function Home() {
       <SolutionCta />
 
       {/* 5. Services overview */}
-      <Services />
+      <Services isHomepage />
 
       {/* 6. Industries we serve (ticker) */}
       <Industries />

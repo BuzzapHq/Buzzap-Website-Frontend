@@ -197,6 +197,18 @@ export async function uploadBlogImage(file) {
   return data;
 }
 
+export function reactToPost(postId, type) {
+  return apiFetch(`/api/blog/${postId}/react`, { method: 'POST', body: { type } });
+}
+
+export function addPostComment(postId, commentData) {
+  return apiFetch(`/api/blog/${postId}/comments`, { method: 'POST', body: commentData });
+}
+
+export function likePostComment(postId, commentId) {
+  return apiFetch(`/api/blog/${postId}/comments/${commentId}/like`, { method: 'POST' });
+}
+
 // --- Pricing ---
 export function getPublicPricing() {
   return apiFetch('/api/pricing');
@@ -226,4 +238,18 @@ export function getMessages(conversationId) {
 }
 export function sendMessage(conversationId, body) {
   return apiFetch(`/api/conversations/${conversationId}/messages`, { method: 'POST', body: { body } });
+}
+
+// --- Case Studies ---
+export function getCaseStudies(params) {
+  return apiFetch(`/api/case-studies${qs(params)}`);
+}
+export function createCaseStudy(payload) {
+  return apiFetch('/api/case-studies', { method: 'POST', body: payload });
+}
+export function updateCaseStudy(id, payload) {
+  return apiFetch(`/api/case-studies/${id}`, { method: 'PATCH', body: payload });
+}
+export function deleteCaseStudy(id) {
+  return apiFetch(`/api/case-studies/${id}`, { method: 'DELETE' });
 }

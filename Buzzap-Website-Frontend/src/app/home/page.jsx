@@ -4,6 +4,7 @@ import { motion, useMotionValue, useTransform, useSpring } from 'framer-motion';
 import { ArrowRight, Play, Sparkles, TrendingUp, Users, Zap, CheckCircle } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useTranslation } from '@/lib/language-context';
 import './homePage.css';
 
 /* ── Animated counter hook ── */
@@ -71,6 +72,7 @@ export default function HomePage() {
   const [started, setStarted] = useState(false);
   const roi = useCountUp(340, 1800, started);
   const leads = useCountUp(2400, 2000, started);
+  const { t } = useTranslation();
 
   useEffect(() => {
     const timer = setTimeout(() => setStarted(true), 1400);
@@ -139,15 +141,14 @@ export default function HomePage() {
               transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
             >
               <Sparkles size={12} className="badge-spark" />
-              <span className="badge-text">Buzzap AI — Now Live</span>
+              <span className="badge-text">{t('hero.badge', 'AI Growth Infrastructure — Now Live')}</span>
               <div className="badge-arrow-box"><ArrowRight size={11} /></div>
             </motion.div>
 
             <h1 className="hero-headline">
-              <RevealWord text="AI" delay={0.12} />
-              <RevealWord text="growth" delay={0.2} />
-              <RevealWord text="systems" delay={0.28} />
-              <RevealWord text="that" delay={0.36} />
+              {t('hero.titleLine1', 'Engineered AI systems that').split(' ').map((word, idx) => (
+                <RevealWord key={idx} text={word} delay={0.12 + idx * 0.08} />
+              ))}
               <br />
               <motion.span
                 className="hero-headline-glow"
@@ -155,7 +156,7 @@ export default function HomePage() {
                 animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
                 transition={{ duration: 0.8, delay: 0.46, ease: [0.16, 1, 0.3, 1] }}
               >
-                work while you don&apos;t.
+                {t('hero.titleLine2', 'work while you don\'t.')}
               </motion.span>
             </h1>
 
@@ -165,8 +166,7 @@ export default function HomePage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.65, ease: [0.16, 1, 0.3, 1] }}
             >
-              Buzzap deploys AI-powered marketing, CRM automation, and SEO growth infrastructure
-              that generates leads, nurtures prospects, and scales your revenue — automatically.
+              {t('hero.subtitle', 'Buzzap deploys AI-powered marketing, CRM automation, and SEO growth infrastructure that generates leads, nurtures prospects, and scales your revenue — automatically.')}
             </motion.p>
 
             <motion.div
@@ -176,14 +176,14 @@ export default function HomePage() {
               transition={{ duration: 0.6, delay: 0.82, ease: [0.16, 1, 0.3, 1] }}
             >
               <Link href="/booking" className="btn-primary-action">
-                <span>Book a Free Call</span>
+                <span>{t('hero.ctaPrimary', 'Book a Free Call')}</span>
                 <ArrowRight size={15} />
               </Link>
               <Link href="/demo" className="btn-video-demo">
                 <div className="play-icon-circle">
                   <Play size={10} fill="#fff" />
                 </div>
-                Watch Demo
+                {t('nav.demo', 'Watch Demo')}
               </Link>
             </motion.div>
 

@@ -75,7 +75,7 @@
 
 .cs-subtitle {
   font-size: 15.5px;
-  color: #64748b;
+  color: #94a3b8;
   line-height: 1.7;
 }
 
@@ -91,17 +91,19 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  background: rgba(8, 12, 32, 0.9);
-  border: 1px solid rgba(255, 255, 255, 0.07);
+  background: rgba(10, 17, 40, 0.65);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 20px;
   overflow: hidden;
   cursor: pointer;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .cs-card:hover {
   border-color: var(--accent, #818cf8);
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.55);
+  transform: translateY(-3px);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6), 0 0 24px var(--accent, rgba(129,140,248,0.2));
 }
 
 /* Image box */
@@ -137,9 +139,9 @@
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: rgba(255,255,255,0.75);
-  background: rgba(5,8,22,0.72);
-  border: 1px solid rgba(255,255,255,0.1);
+  color: rgba(255,255,255,0.85);
+  background: rgba(5,8,22,0.8);
+  border: 1px solid rgba(255,255,255,0.14);
   padding: 4px 11px;
   border-radius: 100px;
   backdrop-filter: blur(8px);
@@ -167,7 +169,7 @@
 .cs-result-sub {
   font-size: 10px;
   font-weight: 600;
-  color: rgba(255,255,255,0.4);
+  color: rgba(255,255,255,0.5);
   text-transform: uppercase;
   letter-spacing: 0.06em;
 }
@@ -190,7 +192,7 @@
 
 .cs-desc {
   font-size: 13px;
-  color: #475569;
+  color: #94a3b8;
   line-height: 1.65;
   margin-bottom: 18px;
   flex: 1;

@@ -141,7 +141,7 @@
 .expSubtitle {
   font-family: 'Inter', sans-serif;
   font-size: clamp(15px, 1.8vw, 17px);
-  color: #64748b;
+  color: #94a3b8;
   line-height: 1.75;
 }
 
@@ -263,7 +263,7 @@
 .expCardDesc {
   font-family: 'Inter', sans-serif;
   font-size: 13.5px;
-  color: #475569;
+  color: #94a3b8;
   line-height: 1.6;
   margin-bottom: 32px;
   flex-grow: 1;
@@ -274,11 +274,11 @@
   align-items: center;
   gap: 8px;
   padding-top: 18px;
-  border-top: 1px solid rgba(255,255,255,0.04);
+  border-top: 1px solid rgba(255,255,255,0.06);
   font-family: 'Inter', sans-serif;
   font-size: 13px;
   font-weight: 600;
-  color: #334155;
+  color: #cbd5e1;
   transition: color 0.25s ease;
 }
 

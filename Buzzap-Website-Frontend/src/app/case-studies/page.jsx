@@ -1,10 +1,14 @@
 'use client';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, ArrowUpRight, TrendingUp, Clock, Users, Zap } from 'lucide-react';
+import { ArrowRight, TrendingUp, Clock, Users, Zap } from 'lucide-react';
 import Link from 'next/link';
+import { getCaseStudies } from '@/lib/api';
 import './case-studies.css';
 
-const studies = [
+const iconMap = { TrendingUp, Clock, Users, Zap };
+
+const defaultStudies = [
   {
     industry: 'Real Estate',
     company: 'UrbanNest Group',
@@ -12,10 +16,10 @@ const studies = [
     challenge: 'UrbanNest had 3 agents, a basic website form, and no system for following up on leads. Ad spend was generating enquiries but 70% went unanswered for over 12 hours.',
     solution: 'We built a full AI lead system: Meta ad campaigns with AI creative testing, a WhatsApp automation sequence that responded within 3 minutes, Zoho CRM enrichment on every lead, and a booking flow via Cal.com that put qualified prospects directly in an agent\'s calendar.',
     results: [
-      { icon: TrendingUp, value: '$4.2M', label: 'New sales pipeline created' },
-      { icon: Clock, value: '3 min', label: 'Average lead response time' },
-      { icon: Users, value: '89%', label: 'Lead contact rate' },
-      { icon: Zap, value: '3x', label: 'Faster sales cycle' },
+      { iconName: 'TrendingUp', value: '$4.2M', label: 'New sales pipeline created' },
+      { iconName: 'Clock', value: '3 min', label: 'Average lead response time' },
+      { iconName: 'Users', value: '89%', label: 'Lead contact rate' },
+      { iconName: 'Zap', value: '3x', label: 'Faster sales cycle' },
     ],
     quote: 'Buzzap replaced four agencies and three freelancers. One team, one system, and we tripled our lead volume.',
     author: 'Chinwe A. — Founder, UrbanNest Group',
@@ -29,10 +33,10 @@ const studies = [
     challenge: 'RetailPulse was running Facebook ads without any post-click automation. Leads filled a form, landed in a spreadsheet, and waited for a sales rep to manually follow up — sometimes days later.',
     solution: 'We deployed AI-powered email and SMS sequences triggered the instant a lead submitted. An AI agent on WhatsApp qualified leads before human handoff. We rebuilt their ad creative strategy using dynamic AI testing to cut cost per lead by 44%.',
     results: [
-      { icon: TrendingUp, value: '340%', label: 'Return on investment' },
-      { icon: Users, value: '2,400', label: 'Leads converted in 90 days' },
-      { icon: Clock, value: '6 min', label: 'Average follow-up time' },
-      { icon: Zap, value: '44%', label: 'Lower cost per lead' },
+      { iconName: 'TrendingUp', value: '340%', label: 'Return on investment' },
+      { iconName: 'Users', value: '2,400', label: 'Leads converted in 90 days' },
+      { iconName: 'Clock', value: '6 min', label: 'Average follow-up time' },
+      { iconName: 'Zap', value: '44%', label: 'Lower cost per lead' },
     ],
     quote: 'The AI follow-up system alone paid for the entire engagement in the first month.',
     author: 'James K. — CEO, RetailPulse',
@@ -46,10 +50,10 @@ const studies = [
     challenge: 'Flowmatic had 5 disconnected tools — HubSpot, Mailchimp, Typeform, Calendly, and Slack — none of which talked to each other. Leads slipped through handoffs and the team spent hours on manual admin.',
     solution: 'We consolidated their entire stack into one automated system using Make.com as the backbone, Zoho CRM as the single source of truth, and a custom AI SDR agent trained on their product to handle initial qualification calls via Vapi.',
     results: [
-      { icon: TrendingUp, value: '98%', label: 'Client retention rate' },
-      { icon: Zap, value: '78%', label: 'Faster sales cycle' },
-      { icon: Users, value: '5 → 1', label: 'Tools consolidated' },
-      { icon: Clock, value: '12h', label: 'Admin time saved weekly' },
+      { iconName: 'TrendingUp', value: '98%', label: 'Client retention rate' },
+      { iconName: 'Zap', value: '78%', label: 'Faster sales cycle' },
+      { iconName: 'Users', value: '5 → 1', label: 'Tools consolidated' },
+      { iconName: 'Clock', value: '12h', label: 'Admin time saved weekly' },
     ],
     quote: 'What I valued most was the clarity. They told us exactly what was broken and delivered precisely that fix.',
     author: 'Sarah M. — Marketing Director, Flowmatic HQ',
@@ -64,6 +68,18 @@ const fadeUp = {
 };
 
 export default function CaseStudiesPage() {
+  const [studiesList, setStudiesList] = useState(defaultStudies);
+
+  useEffect(() => {
+    getCaseStudies()
+      .then((data) => {
+        if (data.caseStudies && data.caseStudies.length > 0) {
+          setStudiesList(data.caseStudies);
+        }
+      })
+      .catch(() => {});
+  }, []);
+
   return (
     <main className="csp-page">
 
@@ -88,11 +104,11 @@ export default function CaseStudiesPage() {
       {/* Case studies */}
       <section className="csp-studies-section">
         <div className="csp-container">
-          {studies.map((study, i) => (
+          {studiesList.map((study, i) => (
             <motion.div
-              key={i}
+              key={study._id || i}
               className="csp-study"
-              style={{ '--csp-accent': study.color }}
+              style={{ '--csp-accent': study.color || '#818cf8' }}
               variants={fadeUp}
               custom={0}
               initial="hidden"
@@ -101,10 +117,10 @@ export default function CaseStudiesPage() {
             >
               <div className="csp-study-header">
                 <div className="csp-study-meta">
-                  <span className="csp-industry-tag" style={{ color: study.color, borderColor: `${study.color}30`, background: `${study.color}0f` }}>
+                  <span className="csp-industry-tag" style={{ color: study.color || '#818cf8', borderColor: `${study.color || '#818cf8'}30`, background: `${study.color || '#818cf8'}0f` }}>
                     {study.industry}
                   </span>
-                  <span className="csp-system-tag">{study.tag}</span>
+                  <span className="csp-system-tag">{study.tag || 'Case Study'}</span>
                 </div>
                 <h2 className="csp-company">{study.company}</h2>
                 <p className="csp-headline">{study.headline}</p>
@@ -120,20 +136,22 @@ export default function CaseStudiesPage() {
                     <span className="csp-text-label">What we built</span>
                     <p className="csp-text-content">{study.solution}</p>
                   </div>
-                  <blockquote className="csp-quote">
-                    <p>&ldquo;{study.quote}&rdquo;</p>
-                    <cite>{study.author}</cite>
-                  </blockquote>
+                  {study.quote && (
+                    <blockquote className="csp-quote">
+                      <p>&ldquo;{study.quote}&rdquo;</p>
+                      {study.author && <cite>{study.author}</cite>}
+                    </blockquote>
+                  )}
                 </div>
 
                 <div className="csp-results-panel">
                   <span className="csp-results-label">Results</span>
                   <div className="csp-results-grid">
-                    {study.results.map((r, ri) => {
-                      const Icon = r.icon;
+                    {(study.results || []).map((r, ri) => {
+                      const IconComponent = iconMap[r.iconName] || TrendingUp;
                       return (
                         <div key={ri} className="csp-result-item">
-                          <Icon size={14} className="csp-result-icon" />
+                          <IconComponent size={14} className="csp-result-icon" />
                           <div className="csp-result-value">{r.value}</div>
                           <div className="csp-result-label">{r.label}</div>
                         </div>

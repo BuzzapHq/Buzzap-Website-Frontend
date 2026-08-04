@@ -122,32 +122,49 @@ function TiltCard({ children, className = '' }) {
   );
 }
 
-export default function ServicesPage() {
+export default function ServicesPage({ isHomepage = false }) {
   return (
-    <main className="svc-page">
+    <main className={`svc-page ${isHomepage ? 'svc-homepage-embed' : ''}`}>
 
-      {/* Hero */}
-      <section className="svc-hero">
-        <div className="svc-hero-glow" />
-        <div className="svc-hero-grid" />
-        <div className="svc-hero-inner">
-          <motion.span className="svc-label" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}>
-            Services
-          </motion.span>
-          <motion.h1 className="svc-hero-title" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={1}>
-            Everything your business needs<br />
-            <span className="svc-hero-muted">to grow on autopilot.</span>
-          </motion.h1>
-          <motion.p className="svc-hero-desc" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={2}>
-            Buzzap combines AI marketing, SEO, CRM automation, and intelligent agents into one
-            cohesive growth system — built specifically for your business.
-          </motion.p>
-          <motion.div className="svc-hero-actions" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={3}>
-            <Link href="/booking" className="svc-btn-primary">Get a Free Audit <ArrowRight size={16} /></Link>
-            <Link href="/case-studies" className="svc-btn-ghost">View case studies <ArrowUpRight size={16} /></Link>
-          </motion.div>
-        </div>
-      </section>
+      {/* Hero / Section Header */}
+      {isHomepage ? (
+        <section className="svc-section-header">
+          <div className="svc-container" style={{ textAlign: 'center', paddingTop: '90px', paddingBottom: '30px' }}>
+            <motion.span className="svc-label" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}>
+              Core Capabilities
+            </motion.span>
+            <motion.h2 className="svc-section-title" style={{ fontSize: 'clamp(32px, 4.5vw, 56px)', marginBottom: '16px' }} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={1}>
+              AI Infrastructure Built For<br />
+              <span className="svc-hero-muted">Infinite Scale</span>
+            </motion.h2>
+            <motion.p className="svc-hero-desc" style={{ margin: '0 auto 40px', maxWidth: '640px' }} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={2}>
+              Modular AI solutions engineered to capture leads, automate workflows, and accelerate pipeline velocity.
+            </motion.p>
+          </div>
+        </section>
+      ) : (
+        <section className="svc-hero">
+          <div className="svc-hero-glow" />
+          <div className="svc-hero-grid" />
+          <div className="svc-hero-inner">
+            <motion.span className="svc-label" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}>
+              Services
+            </motion.span>
+            <motion.h1 className="svc-hero-title" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={1}>
+              Everything your business needs<br />
+              <span className="svc-hero-muted">to grow on autopilot.</span>
+            </motion.h1>
+            <motion.p className="svc-hero-desc" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={2}>
+              Buzzap combines AI marketing, SEO, CRM automation, and intelligent agents into one
+              cohesive growth system — built specifically for your business.
+            </motion.p>
+            <motion.div className="svc-hero-actions" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={3}>
+              <Link href="/booking" className="svc-btn-primary">Get a Free Audit <ArrowRight size={16} /></Link>
+              <Link href="/case-studies" className="svc-btn-ghost">View case studies <ArrowUpRight size={16} /></Link>
+            </motion.div>
+          </div>
+        </section>
+      )}
 
       {/* Services grid */}
       <section className="svc-grid-section">
@@ -226,17 +243,19 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="svc-cta-section">
-        <div className="svc-container">
-          <div className="svc-cta-inner">
-            <span className="svc-label">Ready to start</span>
-            <h2 className="svc-section-title">Let&apos;s build your<br /><span className="svc-muted">growth system.</span></h2>
-            <p className="svc-cta-desc">Book a free 30-minute strategy call. We&apos;ll audit your current setup and show you exactly where you&apos;re leaving revenue on the table.</p>
-            <Link href="/booking" className="svc-btn-primary">Book a Free Call <ArrowRight size={16} /></Link>
+      {/* CTA (only when not homepage embed) */}
+      {!isHomepage && (
+        <section className="svc-cta-section">
+          <div className="svc-container">
+            <div className="svc-cta-inner">
+              <span className="svc-label">Ready to start</span>
+              <h2 className="svc-section-title">Let&apos;s build your<br /><span className="svc-muted">growth system.</span></h2>
+              <p className="svc-cta-desc">Book a free 30-minute strategy call. We&apos;ll audit your current setup and show you exactly where you&apos;re leaving revenue on the table.</p>
+              <Link href="/booking" className="svc-btn-primary">Book a Free Call <ArrowRight size={16} /></Link>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
     </main>
   );
 }

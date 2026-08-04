@@ -22,5 +22,8 @@ router.delete('/:id', ...managers, ctrl.deletePost);
 // --- Public ---
 router.get('/', validateQuery(listPostsSchema), ctrl.listPublished);
 router.get('/:slug', ctrl.getBySlug);
+router.post('/:id/react', ctrl.reactToPost);
+router.post('/:id/comments', ctrl.addComment);
+router.post('/:id/comments/:commentId/like', ctrl.likeComment);
 
 module.exports = router;

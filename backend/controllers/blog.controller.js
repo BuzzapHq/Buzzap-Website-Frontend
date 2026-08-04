@@ -104,4 +104,70 @@ const uploadImage = asyncHandler(async (req, res) => {
   res.status(201).json({ status: 'success', url: result.secure_url });
 });
 
-module.exports = { listPublished, getBySlug, listAll, createPost, updatePost, deletePost, uploadImage };
+// POST /api/blog/:id/react  (public)
+const reactToPost = asyncHandler(async (req, res) => {
+  const { type } = req.body; // 'like', 'love', 'insightful', 'celebrate', 'mindblown'
+  const validTypes = ['like', 'love', 'insightful', 'celebrate', 'mindblown'];
+  if (!validTypes.includes(type)) throw ApiError.badRequest('Invalid reaction type');
+
+  const post = await BlogPost.findById(req.params.id);
+  if (!post) throw ApiError.notFound('Post not found');
+
+  if (!post.reactions) {
+    post.reactions = { like: 0, love: 0, insightful: 0, celebrate: 0, mindblown: 0 };
+  }
+  post.reactions[type] = (post.reactions[type] || 0) + 1;
+  await post.save();
+
+  res.status(200).json({ status: 'success', reactions: post.reactions });
+});
+
+// POST /api/blog/:id/comments  (public)
+const addComment = asyncHandler(async (req, res) => {
+  const { authorName, authorAvatar, content, parentId } = req.body;
+  if (!authorName || !content) throw ApiError.badRequest('Name and comment content are required');
+
+  const post = await BlogPost.findById(req.params.id);
+  if (!post) throw ApiError.notFound('Post not found');
+
+  const comment = {
+    authorName,
+    authorAvatar: authorAvatar || '',
+    content,
+    parentId: parentId || null,
+    createdAt: new Date(),
+    likes: 0,
+  };
+
+  post.comments.push(comment);
+  await post.save();
+
+  res.status(201).json({ status: 'success', comment: post.comments[post.comments.length - 1], comments: post.comments });
+});
+
+// POST /api/blog/:id/comments/:commentId/like  (public)
+const likeComment = asyncHandler(async (req, res) => {
+  const post = await BlogPost.findById(req.params.id);
+  if (!post) throw ApiError.notFound('Post not found');
+
+  const comment = post.comments.id(req.params.commentId);
+  if (!comment) throw ApiError.notFound('Comment not found');
+
+  comment.likes = (comment.likes || 0) + 1;
+  await post.save();
+
+  res.status(200).json({ status: 'success', likes: comment.likes, comments: post.comments });
+});
+
+module.exports = {
+  listPublished,
+  getBySlug,
+  listAll,
+  createPost,
+  updatePost,
+  deletePost,
+  uploadImage,
+  reactToPost,
+  addComment,
+  likeComment,
+};

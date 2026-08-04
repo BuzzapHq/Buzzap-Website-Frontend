@@ -4,15 +4,24 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowUpRight, Globe, Menu, X, ChevronDown, HelpCircle, DollarSign, Play, FileText, Briefcase, LayoutGrid, BookOpen, Users } from 'lucide-react';
+import { ArrowUpRight, Globe, Menu, X, ChevronDown, HelpCircle, Play, FileText, Briefcase, LayoutGrid, Users, Check, Mail } from 'lucide-react';
+import { useTranslation } from '@/lib/language-context';
 import './Navbar.css';
+
+const languages = [
+  { code: 'en', name: 'English', flag: '🇬🇧' },
+  { code: 'fr', name: 'Français', flag: '🇫🇷' },
+  { code: 'es', name: 'Español', flag: '🇪🇸' },
+];
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenu, setMobileMenu] = useState(false);
-  const [activeDropdown, setActiveDropdown] = useState(null);
+  const [activeDropdown, setActiveDropdown] = useState(null); // 'services' | 'more' | 'lang'
   const pathname = usePathname();
   const navRef = useRef(null);
+
+  const { lang, changeLanguage, t } = useTranslation();
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 30);
@@ -38,9 +47,10 @@ const Navbar = () => {
   ];
 
   const moreItems = [
-    { href: '/demo', icon: Play, title: 'Demo', desc: 'See Buzzap AI systems live in action.' },
-    { href: '/faq', icon: HelpCircle, title: 'FAQ', desc: 'Frequently asked questions answered.' },
-    { href: '/terms', icon: FileText, title: 'Terms & Conditions', desc: 'Our policies and legal agreements.' },
+    { href: '/contact', icon: Mail, title: t('nav.contact', 'Contact Us'), desc: 'Get in touch with our Lagos growth team.' },
+    { href: '/demo', icon: Play, title: t('nav.demo', 'Demo'), desc: 'See Buzzap AI systems live in action.' },
+    { href: '/faq', icon: HelpCircle, title: t('nav.faq', 'FAQ'), desc: 'Frequently asked questions answered.' },
+    { href: '/terms', icon: FileText, title: t('nav.terms', 'Terms & Conditions'), desc: 'Our policies and legal agreements.' },
   ];
 
   return (
@@ -58,7 +68,7 @@ const Navbar = () => {
 
           {/* Center Nav Links */}
           <div className="navbar-center">
-            <Link href="/" className={`nav-link ${pathname === '/' ? 'active' : ''}`}>Home</Link>
+            <Link href="/" className={`nav-link ${pathname === '/' ? 'active' : ''}`}>{t('nav.home', 'Home')}</Link>
 
             {/* Services Dropdown */}
             <div
@@ -67,7 +77,7 @@ const Navbar = () => {
               onMouseLeave={() => setActiveDropdown(null)}
             >
               <button className={`nav-link dropdown-toggle ${activeDropdown === 'services' ? 'active' : ''}`}>
-                Services <ChevronDown size={14} className={`chevron-icon ${activeDropdown === 'services' ? 'rotated' : ''}`} />
+                {t('nav.services', 'Services')} <ChevronDown size={14} className={`chevron-icon ${activeDropdown === 'services' ? 'rotated' : ''}`} />
               </button>
               <AnimatePresence>
                 {activeDropdown === 'services' && (
@@ -92,10 +102,11 @@ const Navbar = () => {
               </AnimatePresence>
             </div>
 
-            <Link href="/why-buzzap" className={`nav-link ${pathname === '/why-buzzap' ? 'active' : ''}`}>Why Buzzap</Link>
-            <Link href="/insights" className={`nav-link ${pathname === '/insights' ? 'active' : ''}`}>Insights</Link>
-            <Link href="/case-studies" className={`nav-link ${pathname === '/case-studies' ? 'active' : ''}`}>Case Studies</Link>
-            <Link href="/pricing" className={`nav-link ${pathname === '/pricing' ? 'active' : ''}`}>Pricing</Link>
+            <Link href="/why-buzzap" className={`nav-link ${pathname === '/why-buzzap' ? 'active' : ''}`}>{t('nav.whyBuzzap', 'Why Buzzap')}</Link>
+            <Link href="/insights" className={`nav-link ${pathname === '/insights' ? 'active' : ''}`}>{t('nav.insights', 'Insights')}</Link>
+            <Link href="/case-studies" className={`nav-link ${pathname === '/case-studies' ? 'active' : ''}`}>{t('nav.caseStudies', 'Case Studies')}</Link>
+            <Link href="/pricing" className={`nav-link ${pathname === '/pricing' ? 'active' : ''}`}>{t('nav.pricing', 'Pricing')}</Link>
+            <Link href="/contact" className={`nav-link ${pathname === '/contact' ? 'active' : ''}`}>{t('nav.contact', 'Contact')}</Link>
 
             {/* More Dropdown */}
             <div
@@ -104,7 +115,7 @@ const Navbar = () => {
               onMouseLeave={() => setActiveDropdown(null)}
             >
               <button className={`nav-link dropdown-toggle ${activeDropdown === 'more' ? 'active' : ''}`}>
-                More <ChevronDown size={14} className={`chevron-icon ${activeDropdown === 'more' ? 'rotated' : ''}`} />
+                {t('nav.more', 'More')} <ChevronDown size={14} className={`chevron-icon ${activeDropdown === 'more' ? 'rotated' : ''}`} />
               </button>
               <AnimatePresence>
                 {activeDropdown === 'more' && (
@@ -132,12 +143,72 @@ const Navbar = () => {
 
           {/* Right Side */}
           <div className="navbar-right">
-            <div className="lang-selection">
-              <Globe size={16} />
-              <span className="uppercase-code">EN</span>
+            {/* Interactive Language Selector Dropdown */}
+            <div className="nav-dropdown-wrapper" style={{ position: 'relative' }}>
+              <div
+                className="lang-selection"
+                onClick={() => setActiveDropdown(activeDropdown === 'lang' ? null : 'lang')}
+              >
+                <Globe size={16} />
+                <span className="uppercase-code">{lang}</span>
+                <ChevronDown size={12} className={`chevron-icon ${activeDropdown === 'lang' ? 'rotated' : ''}`} />
+              </div>
+
+              <AnimatePresence>
+                {activeDropdown === 'lang' && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 8, scale: 0.95 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: 6, scale: 0.95 }}
+                    transition={{ duration: 0.15 }}
+                    style={{
+                      position: 'absolute',
+                      top: 'calc(100% + 8px)',
+                      right: 0,
+                      background: 'rgba(8, 13, 30, 0.95)',
+                      border: '1px solid rgba(99, 102, 241, 0.2)',
+                      borderRadius: '12px',
+                      padding: '6px',
+                      minWidth: '130px',
+                      boxShadow: '0 20px 40px rgba(0,0,0,0.6)',
+                      backdropFilter: 'blur(16px)',
+                      zIndex: 2100,
+                    }}
+                  >
+                    {languages.map((l) => (
+                      <button
+                        key={l.code}
+                        type="button"
+                        onClick={() => {
+                          changeLanguage(l.code);
+                          setActiveDropdown(null);
+                        }}
+                        style={{
+                          width: '100%',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'space-between',
+                          padding: '8px 12px',
+                          background: lang === l.code ? 'rgba(99, 102, 241, 0.18)' : 'transparent',
+                          border: 'none',
+                          borderRadius: '8px',
+                          color: lang === l.code ? '#fff' : '#cbd5e1',
+                          fontSize: '13px',
+                          fontWeight: lang === l.code ? '700' : '500',
+                          cursor: 'pointer',
+                        }}
+                      >
+                        <span>{l.flag} {l.name}</span>
+                        {lang === l.code && <Check size={14} style={{ color: '#818cf8' }} />}
+                      </button>
+                    ))}
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
+
             <Link href="/booking" className="btn-audit">
-              <span>Get Free Audit</span>
+              <span>{t('nav.getAudit', 'Get Free Audit')}</span>
               <ArrowUpRight size={14} className="audit-arrow" />
             </Link>
           </div>
@@ -160,17 +231,45 @@ const Navbar = () => {
             className="mobile-menu"
           >
             <div className="mobile-menu-links">
-              <Link href="/" onClick={() => setMobileMenu(false)}>Home</Link>
-              <Link href="/services" onClick={() => setMobileMenu(false)}>Services</Link>
-              <Link href="/why-buzzap" onClick={() => setMobileMenu(false)}>Why Buzzap</Link>
-              <Link href="/insights" onClick={() => setMobileMenu(false)}>Insights</Link>
-              <Link href="/case-studies" onClick={() => setMobileMenu(false)}>Case Studies</Link>
-              <Link href="/pricing" onClick={() => setMobileMenu(false)}>Pricing</Link>
-              <Link href="/demo" onClick={() => setMobileMenu(false)}>Demo</Link>
-              <Link href="/faq" onClick={() => setMobileMenu(false)}>FAQ</Link>
+              <Link href="/" onClick={() => setMobileMenu(false)}>{t('nav.home', 'Home')}</Link>
+              <Link href="/services" onClick={() => setMobileMenu(false)}>{t('nav.services', 'Services')}</Link>
+              <Link href="/why-buzzap" onClick={() => setMobileMenu(false)}>{t('nav.whyBuzzap', 'Why Buzzap')}</Link>
+              <Link href="/insights" onClick={() => setMobileMenu(false)}>{t('nav.insights', 'Insights')}</Link>
+              <Link href="/case-studies" onClick={() => setMobileMenu(false)}>{t('nav.caseStudies', 'Case Studies')}</Link>
+              <Link href="/pricing" onClick={() => setMobileMenu(false)}>{t('nav.pricing', 'Pricing')}</Link>
+              <Link href="/contact" onClick={() => setMobileMenu(false)}>{t('nav.contact', 'Contact')}</Link>
+              <Link href="/demo" onClick={() => setMobileMenu(false)}>{t('nav.demo', 'Demo')}</Link>
+              <Link href="/faq" onClick={() => setMobileMenu(false)}>{t('nav.faq', 'FAQ')}</Link>
+
+              {/* Mobile Language Selector */}
+              <div style={{ marginTop: '10px', paddingTop: '16px', borderTop: '1px solid rgba(255,255,255,0.06)' }}>
+                <span style={{ fontSize: '12px', color: '#94a3b8', display: 'block', marginBottom: '8px' }}>Select Language</span>
+                <div style={{ display: 'flex', gap: '8px' }}>
+                  {languages.map((l) => (
+                    <button
+                      key={l.code}
+                      type="button"
+                      onClick={() => changeLanguage(l.code)}
+                      style={{
+                        padding: '6px 14px',
+                        borderRadius: '8px',
+                        border: '1px solid rgba(255,255,255,0.1)',
+                        background: lang === l.code ? 'rgba(99, 102, 241, 0.25)' : 'rgba(255,255,255,0.03)',
+                        color: lang === l.code ? '#fff' : '#94a3b8',
+                        fontSize: '12px',
+                        fontWeight: '600',
+                        cursor: 'pointer',
+                      }}
+                    >
+                      {l.flag} {l.code.toUpperCase()}
+                    </button>
+                  ))}
+                </div>
+              </div>
             </div>
+
             <button className="mobile-btn" onClick={() => setMobileMenu(false)}>
-              <Link href="/booking">Get Free Audit</Link>
+              <Link href="/booking">{t('nav.getAudit', 'Get Free Audit')}</Link>
               <ArrowUpRight size={18} />
             </button>
           </motion.div>
@@ -181,3 +280,4 @@ const Navbar = () => {
 };
 
 export default Navbar;
+
