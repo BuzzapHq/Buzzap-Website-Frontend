@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
+import LazyVideo from '@/components/LazyVideo';
 import { ArrowLeft, ArrowRight, Sparkles, Layers, Palette, Eye } from 'lucide-react';
 import './brand-showcase.css';
 
@@ -117,22 +118,13 @@ export default function BrandShowcase() {
               <div className="bs-img-col">
                 <div className="bs-img-card">
                   {slide.video ? (
-                    <video
-                      autoPlay
-                      loop
-                      muted
-                      playsInline
-                      className="bs-video"
-                      poster={slide.image}
-                    >
-                      <source src={slide.video} type="video/mp4" />
-                      <Image src={slide.image} alt={slide.brand} fill className="bs-img" />
-                    </video>
+                    <LazyVideo src={slide.video} poster={slide.image} alt={slide.brand} className="bs-video" />
                   ) : (
                     <Image
                       src={slide.image}
                       alt={slide.brand}
                       fill
+                      sizes="(max-width: 900px) 100vw, 45vw"
                       className="bs-img"
                     />
                   )}

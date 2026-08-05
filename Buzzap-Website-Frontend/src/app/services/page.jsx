@@ -4,6 +4,7 @@ import { motion, useMotionValue, useTransform, useSpring } from 'framer-motion';
 import { ArrowRight, ArrowUpRight, BarChart2, Search, Cpu, MessageSquare, PenTool, Layers, CheckCircle } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
+import LazyVideo from '@/components/LazyVideo';
 import './service.css';
 
 const services = [
@@ -197,19 +198,9 @@ export default function ServicesPage({ isHomepage = false }) {
                     {/* Media Header (Motion Graphic / Image) */}
                     <div className="svc-card-img-wrap" style={{ '--svc-color': s.color }}>
                       {s.video ? (
-                        <video
-                          autoPlay
-                          loop
-                          muted
-                          playsInline
-                          className="svc-card-video"
-                          poster={s.image}
-                        >
-                          <source src={s.video} type="video/mp4" />
-                          <Image src={s.image} alt={s.title} fill className="svc-card-img" />
-                        </video>
+                        <LazyVideo src={s.video} poster={s.image} alt={s.title} className="svc-card-video" />
                       ) : (
-                        <Image src={s.image} alt={s.title} fill className="svc-card-img" />
+                        <Image src={s.image} alt={s.title} fill className="svc-card-img" sizes="(max-width: 768px) 100vw, 50vw" />
                       )}
                       <div className="svc-card-img-overlay" />
 
