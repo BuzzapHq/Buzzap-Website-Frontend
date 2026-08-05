@@ -1,54 +1,31 @@
 'use client';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
-import { ArrowUpRight, TrendingUp, Users, Zap } from 'lucide-react';
+import Link from 'next/link';
+import { ArrowRight, ArrowUpRight } from 'lucide-react';
 import './case-studies.css';
 
 const cases = [
   {
-    industry: 'E-Commerce',
-    company: 'RetailPulse',
-    result: '340% ROI',
-    period: 'in 90 days',
-    desc: 'AI-powered lead nurturing and automated follow-up sequences turned cold leads into buyers within 48 hours.',
-    metrics: [
-      { icon: TrendingUp, value: '340%', label: 'ROI increase' },
-      { icon: Users,      value: '2.4K',  label: 'Leads converted' },
-      { icon: Zap,        value: '6 min', label: 'Avg. follow-up' },
-    ],
-    tag: 'AI Marketing + CRM',
+    id: 1,
+    title: 'Bringing the Mega Growth Brand to Life Through Visual Storytelling',
+    category: 'Brand Strategy & Visuals',
     image: '/product2.jpeg',
-    color: '#818cf8',
+    link: '/case-studies',
   },
   {
-    industry: 'Real Estate',
-    company: 'UrbanNest Group',
-    result: '$4.2M',
-    period: 'new pipeline',
-    desc: 'Full AI sales system — ad capture to WhatsApp follow-up to CRM enrichment — all automated, zero manual work.',
-    metrics: [
-      { icon: TrendingUp, value: '$4.2M', label: 'New pipeline' },
-      { icon: Users,      value: '89%',   label: 'Lead response rate' },
-      { icon: Zap,        value: '3×',    label: 'Faster conversions' },
-    ],
-    tag: 'Full AI Growth System',
+    id: 2,
+    title: 'A Nigerian Fashion Brand That Made People Come Back: How Àlàyò Hit 500% ROAS',
+    category: 'E-Commerce Growth & Paid Ads',
     image: '/social.jpeg',
-    color: '#10b981',
+    link: '/case-studies',
   },
   {
-    industry: 'SaaS',
-    company: 'Flowmatic HQ',
-    result: '98%',
-    period: 'client retention',
-    desc: 'Replaced 5 disconnected tools with one unified automation layer. Sales cycle dropped from 14 days to 3.',
-    metrics: [
-      { icon: TrendingUp, value: '98%',  label: 'Retention rate' },
-      { icon: Users,      value: '5→1',  label: 'Tools consolidated' },
-      { icon: Zap,        value: '78%',  label: 'Faster sales cycle' },
-    ],
-    tag: 'Systems Integration',
+    id: 3,
+    title: 'A 25-Year Legacy of Legal Excellence Transformed Into a Digital Law Firm Presence',
+    category: 'Digital Transformation',
     image: '/ai.jpeg',
-    color: '#c084fc',
+    link: '/case-studies',
   },
 ];
 
@@ -58,7 +35,7 @@ export default function CaseStudies() {
       <div className="cs-glow" />
 
       <div className="cs-container">
-        {/* Header */}
+        {/* Header matching Image 3 */}
         <motion.div
           className="cs-header"
           initial={{ opacity: 0, y: 20 }}
@@ -66,80 +43,64 @@ export default function CaseStudies() {
           viewport={{ once: true }}
           transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
         >
-          <span className="cs-badge">Proven Results</span>
+          <span className="cs-badge">Case Studies</span>
           <h2 className="cs-title">
-            Real businesses.{' '}
-            <span className="cs-title-accent">Real numbers.</span>
+            Real Results from Our Client<br />
+            <span className="cs-title-accent">Projects</span>
           </h2>
           <p className="cs-subtitle">
-            These aren&apos;t projections. They&apos;re what happens when you replace broken systems with intelligent ones.
+            See how we deliver results for businesses through strategic thinking, creative execution, and high-impact digital solutions.
           </p>
         </motion.div>
 
-        {/* Cards */}
+        {/* Cards Grid matching Image 3 */}
         <div className="cs-grid">
           {cases.map((c, i) => (
             <motion.article
-              key={i}
-              className="cs-card"
-              style={{ '--accent': c.color }}
-              initial={{ opacity: 0, y: 36 }}
+              key={c.id}
+              className="cs-ref-card"
+              initial={{ opacity: 0, y: 32 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.12 }}
-              transition={{ delay: i * 0.13, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-              whileHover={{ y: -8, transition: { duration: 0.3 } }}
+              transition={{ delay: i * 0.12, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+              whileHover={{ y: -6, transition: { duration: 0.3 } }}
             >
-              {/* ── Image ── */}
-              <div className="cs-img-box">
+              <div className="cs-ref-img-box">
                 <Image
                   src={c.image}
-                  alt={c.company}
+                  alt={c.title}
                   fill
                   sizes="(max-width: 768px) 100vw, 33vw"
-                  className="cs-img"
+                  className="cs-ref-img"
                 />
-                <div className="cs-img-fade" />
-
-                {/* industry pill */}
-                <span className="cs-industry">{c.industry}</span>
-
-                {/* big result */}
-                <div className="cs-result">
-                  <span className="cs-result-num">{c.result}</span>
-                  <span className="cs-result-sub">{c.period}</span>
-                </div>
+                <div className="cs-ref-img-overlay" />
               </div>
 
-              {/* ── Body ── */}
-              <div className="cs-body">
-                <p className="cs-company">{c.company}</p>
-                <p className="cs-desc">{c.desc}</p>
-
-                {/* metrics */}
-                <div className="cs-metrics">
-                  {c.metrics.map((m, mi) => {
-                    const Icon = m.icon;
-                    return (
-                      <div className="cs-metric" key={mi}>
-                        <Icon size={11} className="cs-metric-icon" />
-                        <span className="cs-metric-val">{m.value}</span>
-                        <span className="cs-metric-lbl">{m.label}</span>
-                      </div>
-                    );
-                  })}
-                </div>
-
-                {/* footer */}
-                <div className="cs-footer">
-                  <span className="cs-tag">{c.tag}</span>
-                  <span className="cs-arrow"><ArrowUpRight size={14} /></span>
+              <div className="cs-ref-body">
+                <h3 className="cs-ref-card-title">{c.title}</h3>
+                <div className="cs-ref-footer">
+                  <Link href={c.link} className="cs-ref-btn">
+                    View Project <ArrowRight size={14} style={{ marginLeft: 4 }} />
+                  </Link>
                 </div>
               </div>
-
-              {/* corner glow */}
-              <div className="cs-card-glow" />
             </motion.article>
           ))}
+        </div>
+
+        {/* Pagination Dots & All Case Studies CTA button matching Image 3 */}
+        <div className="cs-ref-pagination-bar">
+          <div className="cs-ref-dots">
+            <span className="cs-ref-dot" />
+            <span className="cs-ref-dot" />
+            <span className="cs-ref-dot cs-ref-dot-active" />
+            <span className="cs-ref-dot" />
+            <span className="cs-ref-dot" />
+          </div>
+
+          <Link href="/case-studies" className="cs-ref-all-btn">
+            All Case Studies <ArrowUpRight size={14} style={{ marginLeft: 4 }} />
+          </Link>
         </div>
       </div>
     </section>

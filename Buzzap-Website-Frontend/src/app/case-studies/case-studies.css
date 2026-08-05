@@ -289,6 +289,147 @@
   opacity: 1;
 }
 
+/* ── Reference Design Card Styles (Image 3) ── */
+.cs-ref-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: rgba(12, 17, 34, 0.7);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 20px;
+  overflow: hidden;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.cs-ref-card:hover {
+  border-color: rgba(129, 140, 248, 0.5);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6), 0 0 24px rgba(129, 140, 248, 0.2);
+  transform: translateY(-4px);
+}
+
+.cs-ref-img-box {
+  position: relative;
+  width: 100%;
+  height: 220px;
+  overflow: hidden;
+}
+
+.cs-ref-img {
+  object-fit: cover;
+  object-position: center;
+  transition: transform 0.55s ease;
+}
+
+.cs-ref-card:hover .cs-ref-img {
+  transform: scale(1.06);
+}
+
+.cs-ref-img-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(2, 6, 23, 0.1) 0%, rgba(2, 6, 23, 0.6) 100%);
+}
+
+.cs-ref-body {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  justify-content: space-between;
+}
+
+.cs-ref-card-title {
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: #f1f5f9;
+  line-height: 1.45;
+  margin-bottom: 24px;
+  letter-spacing: -0.01em;
+}
+
+.cs-ref-footer {
+  margin-top: auto;
+}
+
+.cs-ref-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: #cbd5e1;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 8px 18px;
+  border-radius: 100px;
+  text-decoration: none;
+  transition: all 0.25s ease;
+}
+
+.cs-ref-card:hover .cs-ref-btn {
+  background: rgba(129, 140, 248, 0.15);
+  border-color: rgba(129, 140, 248, 0.4);
+  color: #ffffff;
+}
+
+/* Pagination bar & All Case Studies button */
+.cs-ref-pagination-bar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 28px;
+  margin-top: 44px;
+}
+
+.cs-ref-dots {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.cs-ref-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+}
+
+.cs-ref-dot-active {
+  width: 8px;
+  height: 8px;
+  background: #ffffff;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+}
+
+.cs-ref-all-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: #f1f5f9;
+  background: rgba(15, 23, 42, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 12px 28px;
+  border-radius: 100px;
+  text-decoration: none;
+  backdrop-filter: blur(12px);
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+.cs-ref-all-btn:hover {
+  background: linear-gradient(135deg, #4f46e5, #7c3aed);
+  border-color: transparent;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(99, 102, 241, 0.4);
+}
+
 /* Responsive — homepage component */
 @media (max-width: 1050px) {
   .cs-grid { grid-template-columns: repeat(2, 1fr); }
@@ -296,7 +437,7 @@
 @media (max-width: 640px) {
   .cs-grid { grid-template-columns: 1fr; }
   .cs-section { padding: 72px 16px 80px; }
-  .cs-img-box { height: 180px; }
+  .cs-img-box, .cs-ref-img-box { height: 190px; }
 }
 
 

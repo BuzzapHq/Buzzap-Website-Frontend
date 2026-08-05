@@ -2,57 +2,61 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
-import { ArrowLeft, ArrowRight, Sparkles, TrendingUp } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Sparkles, Layers, Palette, Eye } from 'lucide-react';
 import './brand-showcase.css';
 
 const slides = [
   {
     id: 1,
-    brand: 'TechFlow',
-    category: 'SaaS Growth',
-    result: '+487% MRR in 6 months',
-    stat: '$2.4M',
-    statLabel: 'Revenue added',
-    description: 'From 200 to 2,800 paying users through AI-powered outbound + CRM automation.',
-    image: '/product2.jpeg',
+    brand: 'Buzzap Innovations',
+    category: 'Brand Identity & Design System',
+    result: 'Visual Authority & Design Tokens',
+    stat: '100%',
+    statLabel: 'Bespoke Brand Assets',
+    description: 'A curated visual identity system featuring custom typography, dark-mode glassmorphic cards, vibrant color accents, and structured brand guidelines.',
+    image: '/buzz.jpeg',
+    video: null,
     accent: '#818cf8',
-    tags: ['AI Marketing', 'CRM Automation', 'SEO'],
+    tags: ['Brand Identity', 'Design System', 'Typography', 'Dark Mode'],
   },
   {
     id: 2,
-    brand: 'SolarEdge',
-    category: 'Home Services',
-    result: '12× lead volume in 90 days',
-    stat: '12×',
-    statLabel: 'More leads',
-    description: 'Meta Ads + WhatsApp AI agent combo that booked 340 qualified calls per month on autopilot.',
-    image: '/social.jpeg',
-    accent: '#10b981',
-    tags: ['Meta Ads', 'WhatsApp AI', 'Lead Gen'],
+    brand: 'Buzzap Motion Lab',
+    category: 'Motion Graphics & UI Aesthetics',
+    result: 'Dynamic Micro-Animations & AI Interface',
+    stat: '60 FPS',
+    statLabel: 'Fluid Motion Graphics',
+    description: 'Interactive motion graphics, fluid video loops, and conversational AI interface graphics designed to engage prospects instantly.',
+    image: '/ai.jpeg',
+    video: '/1782395025815.mp4',
+    accent: '#c084fc',
+    tags: ['Motion Design', 'AI Interface', 'Micro-Animations', 'UI/UX'],
   },
   {
     id: 3,
-    brand: 'HealthFirst',
-    category: 'Healthcare SaaS',
-    result: '98% lead response rate via AI',
-    stat: '98%',
-    statLabel: 'Response rate',
-    description: 'AI chatbot + email sequence that responds to every inbound lead within 60 seconds.',
-    image: '/ai.jpeg',
-    accent: '#c084fc',
-    tags: ['AI Agents', 'Email Automation', 'CRM'],
+    brand: 'Buzzap Creative Studio',
+    category: 'Visual Storytelling & Ad Assets',
+    result: 'High-Impact Campaign Creatives',
+    stat: '500%',
+    statLabel: 'Visual Engagement',
+    description: 'High-converting ad assets, social media visual systems, and brand storytelling graphics built to dominate digital channels.',
+    image: '/social.jpeg',
+    video: null,
+    accent: '#10b981',
+    tags: ['Visual Storytelling', 'Ad Creatives', 'Social Branding', 'Asset Library'],
   },
   {
     id: 4,
-    brand: 'LuxBuild',
-    category: 'Construction',
-    result: '340% ROI on ad spend',
-    stat: '340%',
-    statLabel: 'Ad spend ROI',
-    description: 'Google Ads + SEO strategy that positioned them as the #1 builder in their region within 5 months.',
-    image: '/buzz.jpeg',
+    brand: 'Buzzap Product Systems',
+    category: 'Digital Product & Web Aesthetics',
+    result: 'High-Converting Web Architecture',
+    stat: '3.5×',
+    statLabel: 'Conversion Scale',
+    description: 'Sleek dark-theme layouts, responsive visual cards, and state-of-the-art frontend design engineered for modern enterprise websites.',
+    image: '/product2.jpeg',
+    video: null,
     accent: '#f59e0b',
-    tags: ['Google Ads', 'SEO', 'Brand Authority'],
+    tags: ['Web Design', 'Component Library', 'Design Tokens', 'Product Identity'],
   },
 ];
 
@@ -64,7 +68,7 @@ export default function BrandShowcase() {
   const prev = () => { setDir(-1); setActive((p) => (p - 1 + slides.length) % slides.length); };
 
   useEffect(() => {
-    const id = setInterval(next, 5500);
+    const id = setInterval(next, 6000);
     return () => clearInterval(id);
   }, []);
 
@@ -84,13 +88,16 @@ export default function BrandShowcase() {
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
         >
           <span className="bs-badge">
-            <Sparkles size={11} />
-            Client Success Stories
+            <Sparkles size={12} style={{ marginRight: 6 }} />
+            Brand Assets & Visual Identity Prowess
           </span>
           <h2 className="bs-title">
-            Results that speak<br />
-            <span className="bs-title-accent">for themselves.</span>
+            Showcasing Buzzap&apos;s Brand<br />
+            <span className="bs-title-accent">&amp; Visual Identity System</span>
           </h2>
+          <p style={{ color: '#94a3b8', fontSize: '15px', marginTop: '12px', maxWidth: '600px', margin: '12px auto 0' }}>
+            A showcase of our brand assets, motion design capabilities, and high-impact visual craftsmanship.
+          </p>
         </motion.div>
 
         {/* Main slide */}
@@ -106,15 +113,29 @@ export default function BrandShowcase() {
               transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
               style={{ '--bs-accent': slide.accent }}
             >
-              {/* Image */}
+              {/* Media Column (Video / Image) */}
               <div className="bs-img-col">
                 <div className="bs-img-card">
-                  <Image
-                    src={slide.image}
-                    alt={slide.brand}
-                    fill
-                    className="bs-img"
-                  />
+                  {slide.video ? (
+                    <video
+                      autoPlay
+                      loop
+                      muted
+                      playsInline
+                      className="bs-video"
+                      poster={slide.image}
+                    >
+                      <source src={slide.video} type="video/mp4" />
+                      <Image src={slide.image} alt={slide.brand} fill className="bs-img" />
+                    </video>
+                  ) : (
+                    <Image
+                      src={slide.image}
+                      alt={slide.brand}
+                      fill
+                      className="bs-img"
+                    />
+                  )}
                   <div className="bs-img-overlay" />
                   <div className="bs-big-stat">
                     <div className="bs-big-stat-value" style={{ color: slide.accent }}>{slide.stat}</div>
@@ -123,7 +144,7 @@ export default function BrandShowcase() {
                 </div>
               </div>
 
-              {/* Text */}
+              {/* Text Column */}
               <div className="bs-text-col">
                 <div className="bs-brand-row">
                   <span className="bs-brand-name">{slide.brand}</span>
@@ -144,14 +165,14 @@ export default function BrandShowcase() {
                 </div>
 
                 <div className="bs-impact-row">
-                  <TrendingUp size={14} style={{ color: slide.accent }} />
-                  <span>Achieved within 90 days of launch</span>
+                  <Palette size={14} style={{ color: slide.accent }} />
+                  <span>Engineered with Buzzap&apos;s Design System &amp; Brand Tokens</span>
                 </div>
               </div>
             </motion.div>
           </AnimatePresence>
 
-          {/* Nav */}
+          {/* Controls */}
           <div className="bs-nav">
             <button className="bs-nav-btn" onClick={prev} aria-label="Previous">
               <ArrowLeft size={16} />

@@ -11,62 +11,73 @@ const services = [
     id: 'ai-marketing',
     icon: BarChart2,
     label: '01',
-    title: 'AI Marketing',
-    tagline: 'Campaigns that run themselves.',
-    desc: 'We deploy AI-powered marketing infrastructure that captures leads across every channel, nurtures them automatically, and pushes ready-to-buy prospects directly into your pipeline.',
+    title: 'PAID ADS & AI MARKETING',
+    capability: 'PAID ADS',
+    tagline: 'High-converting, hyper-targeted campaigns.',
+    desc: 'High-converting, hyper-targeted campaigns across premium digital channels designed to capture attention and scale ROI through autonomous testing and instant lead distribution.',
     bullets: ['Meta & Google Ads automation', 'AI-driven ad copy and creative testing', 'Multi-channel lead capture systems', 'Automated email and SMS sequences', 'Real-time campaign performance dashboards'],
     image: '/product2.jpeg',
+    video: '/services.mp4',
     color: '#818cf8',
   },
   {
     id: 'brand-boost-seo',
     icon: Search,
     label: '02',
-    title: 'Brand Boost & SEO',
-    tagline: 'Visibility that compounds.',
-    desc: 'From technical SEO audits to full brand identity systems, we position your business to dominate search rankings and command authority in your market.',
+    title: 'AI-DRIVEN SEO & BRAND BOOST',
+    capability: 'AI-DRIVEN SEO',
+    tagline: 'Algorithmic search positioning.',
+    desc: 'Algorithmic search positioning and predictive keyword intent structures engineered to dominate traffic channels and build long-term authority.',
     bullets: ['Technical SEO audit and implementation', 'Keyword strategy and content architecture', 'Brand identity and positioning', 'Local SEO and Google Business optimisation', 'Authority link building campaigns'],
     image: '/social.jpeg',
+    video: '/1782395091229 (1).mp4',
     color: '#10b981',
   },
   {
     id: 'crm-automation',
     icon: Layers,
     label: '03',
-    title: 'CRM & Lead Automation',
-    tagline: 'Your pipeline, fully automated.',
-    desc: 'We integrate your CRM, forms, ads, WhatsApp, and email into one automated system. Every lead is captured, enriched, scored, and followed up in minutes.',
+    title: 'CRM & LEAD AUTOMATION',
+    capability: 'AI-LEAD GENERATION',
+    tagline: 'Autonomous prospect sourcing pipelines.',
+    desc: 'Autonomous prospect sourcing pipelines that automatically track, qualify, and score high-intent buyers into your pipeline 24/7.',
     bullets: ['CRM setup and full configuration', 'Automated lead routing and scoring', 'WhatsApp and SMS follow-up sequences', 'Pipeline stage automation', 'Zoho, HubSpot, and Apollo.io integrations'],
     image: '/product3.jpeg',
+    video: '/1782380563471 (1).mp4',
     color: '#f59e0b',
   },
   {
     id: 'ai-agents',
     icon: Cpu,
     label: '04',
-    title: 'AI Agents & Chatbots',
-    tagline: 'Always available. Never off script.',
-    desc: 'Custom AI agents trained on your business that handle enquiries, qualify leads, book appointments, and manage customer service — 24/7 across WhatsApp, web, and voice.',
-    bullets: ['Custom-trained chatbots (Voiceflow, Vapi)', 'WhatsApp AI agents', 'Voice AI for inbound and outbound calls', 'Appointment booking automation via Cal.com', 'Handoff to human agents when needed'],
+    title: 'AI VOICE AGENTS & CHATBOTS',
+    capability: 'AI CUSTOMER SUPPORT',
+    tagline: 'Intelligent, conversational automated engines.',
+    desc: 'Intelligent, conversational automated engines delivering instant resolution to your clients around the clock across WhatsApp, Web, and Voice AI.',
+    bullets: ['Custom-trained chatbots (Voiceflow, Vapi)', 'WhatsApp AI agents for instant resolution', 'Voice AI for inbound and outbound calls', 'Appointment booking automation via Cal.com', 'Handoff to human agents when needed'],
     image: '/ai.jpeg',
+    video: '/1782395025815.mp4',
     color: '#c084fc',
   },
   {
     id: 'content-strategy',
     icon: PenTool,
     label: '05',
-    title: 'Content & Creative Strategy',
+    title: 'CONTENT & CREATIVE STRATEGY',
+    capability: 'VISUAL & CONTENT AI',
     tagline: 'Content that converts.',
     desc: 'We build AI-assisted content pipelines that produce high-quality blog posts, social content, ad creative, and video scripts at scale — aligned to your brand voice.',
     bullets: ['AI-accelerated blog and SEO content', 'Social media content calendars', 'Ad copywriting and creative briefs', 'Video scripts and UGC frameworks', 'Email newsletter production'],
     image: '/product4.jpeg',
+    video: '/1782395025815 (1).mp4',
     color: '#f43f5e',
   },
   {
     id: 'growth-consulting',
     icon: MessageSquare,
     label: '06',
-    title: 'Growth Consulting',
+    title: 'GROWTH CONSULTING',
+    capability: 'SYSTEM ARCHITECTURE',
     tagline: 'Strategy before execution.',
     desc: 'Before we build anything, we audit where your current systems are breaking down. Our consulting engagements identify your highest-leverage opportunities.',
     bullets: ['Full business growth audit', 'Revenue gap analysis', 'AI readiness assessment', 'Custom automation roadmap', 'Monthly strategy and performance reviews'],
@@ -183,14 +194,30 @@ export default function ServicesPage({ isHomepage = false }) {
                   custom={i % 2}
                 >
                   <TiltCard className="svc-card">
-                    {/* Image header */}
+                    {/* Media Header (Motion Graphic / Image) */}
                     <div className="svc-card-img-wrap" style={{ '--svc-color': s.color }}>
-                      <Image src={s.image} alt={s.title} fill className="svc-card-img" />
+                      {s.video ? (
+                        <video
+                          autoPlay
+                          loop
+                          muted
+                          playsInline
+                          className="svc-card-video"
+                          poster={s.image}
+                        >
+                          <source src={s.video} type="video/mp4" />
+                          <Image src={s.image} alt={s.title} fill className="svc-card-img" />
+                        </video>
+                      ) : (
+                        <Image src={s.image} alt={s.title} fill className="svc-card-img" />
+                      )}
                       <div className="svc-card-img-overlay" />
+
                       <div className="svc-card-img-label">
                         <div className="svc-card-icon">
                           <Icon size={16} strokeWidth={1.5} />
                         </div>
+                        <span className="svc-capability-tag">{s.capability}</span>
                         <span className="svc-card-num">{s.label}</span>
                       </div>
                     </div>
@@ -209,7 +236,7 @@ export default function ServicesPage({ isHomepage = false }) {
                       </ul>
                       <div className="svc-card-footer">
                         <Link href="/booking" className="svc-card-link" style={{ '--svc-color': s.color }}>
-                          Get started <ArrowRight size={13} />
+                          Explore Capability <ArrowRight size={13} />
                         </Link>
                       </div>
                     </div>
