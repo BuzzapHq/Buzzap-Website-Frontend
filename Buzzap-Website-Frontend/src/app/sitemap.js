@@ -1,5 +1,5 @@
 export default function sitemap() {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://buzzapagency.com';
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.buzzaphq.com';
 
   const routes = [
     '',
