@@ -146,35 +146,18 @@ export default function HomePage() {
             </motion.div>
 
             <h1 className="hero-headline">
-              {t('hero.titleLine1', 'Engineered AI systems that').split(' ').map((word, idx) => (
-                <RevealWord key={idx} text={word} delay={0.12 + idx * 0.08} />
-              ))}
+              {t('hero.titleLine1', 'Engineered AI systems that')}
               <br />
-              <motion.span
-                className="hero-headline-glow"
-                initial={{ opacity: 0, y: 40, filter: 'blur(10px)' }}
-                animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-                transition={{ duration: 0.8, delay: 0.46, ease: [0.16, 1, 0.3, 1] }}
-              >
+              <span className="hero-headline-glow">
                 {t('hero.titleLine2', 'work while you don\'t.')}
-              </motion.span>
+              </span>
             </h1>
 
-            <motion.p
-              className="hero-subheadline"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.65, ease: [0.16, 1, 0.3, 1] }}
-            >
+            <p className="hero-subheadline">
               {t('hero.subtitle', 'Buzzap deploys AI-powered marketing, CRM automation, and SEO growth infrastructure that generates leads, nurtures prospects, and scales your revenue — automatically.')}
-            </motion.p>
+            </p>
 
-            <motion.div
-              className="cta-buttons"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.82, ease: [0.16, 1, 0.3, 1] }}
-            >
+            <div className="cta-buttons">
               <Link href="/booking" className="btn-primary-action">
                 <span>{t('hero.ctaPrimary', 'Book a Free Call')}</span>
                 <ArrowRight size={15} />
@@ -185,34 +168,24 @@ export default function HomePage() {
                 </div>
                 {t('nav.demo', 'Watch Demo')}
               </Link>
-            </motion.div>
+            </div>
 
             {/* Trust row */}
-            <motion.div
-              className="brand-trust-footer"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.8, delay: 1.05 }}
-            >
+            <div className="brand-trust-footer">
               <p className="trust-heading">Trusted by 500+ companies worldwide</p>
               <div className="trust-logos-row">
                 {['Stripe', 'Notion', 'Linear', 'Vercel', 'Figma'].map((b) => (
                   <span className="trust-logo" key={b}>{b}</span>
                 ))}
               </div>
-            </motion.div>
+            </div>
           </div>
 
           {/* ── RIGHT: Visual dashboard ── */}
           <div className="hero-right">
 
             {/* Main image card */}
-            <motion.div
-              className="hero-img-card"
-              initial={{ opacity: 0, x: 60, scale: 0.92 }}
-              animate={{ opacity: 1, x: 0, scale: 1 }}
-              transition={{ duration: 0.9, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
-            >
+            <div className="hero-img-card">
               <Image
                 src="/product2.jpeg"
                 alt="AI Growth Dashboard"
@@ -229,7 +202,7 @@ export default function HomePage() {
                 <Zap size={12} />
                 <span>AI-Powered Growth Engine</span>
               </div>
-            </motion.div>
+            </div>
 
             {/* Floating stat card — ROI */}
             <FloatingCard delay={0} className="hero-stat-card hero-stat-card-roi">
