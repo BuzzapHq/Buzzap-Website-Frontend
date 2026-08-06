@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { motion } from 'framer-motion';
 import Cal, { getCalApi } from '@calcom/embed-react';
 import { Calendar, Clock, ShieldCheck, Zap, Send, X } from 'lucide-react';
@@ -19,6 +19,8 @@ const fadeUp = {
 
 export default function FinalCta() {
   const [calLoaded, setCalLoaded] = useState(false);
+  const [shouldInitCal, setShouldInitCal] = useState(false);
+  const sectionRef = useRef(null);
   const [showFallbackModal, setShowFallbackModal] = useState(false);
   const [form, setForm] = useState({ name: '', email: '', phone: '', message: '' });
   const [submitting, setSubmitting] = useState(false);
@@ -26,12 +28,23 @@ export default function FinalCta() {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    // Warm up DNS & TLS preconnect for Cal.com
-    const preconnect = document.createElement('link');
-    preconnect.rel = 'preconnect';
-    preconnect.href = 'https://app.cal.com';
-    document.head.appendChild(preconnect);
+    const el = sectionRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          setShouldInitCal(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: '300px' }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
+  useEffect(() => {
+    if (!shouldInitCal) return;
     (async function () {
       try {
         const cal = await getCalApi({ namespace: CAL_NAMESPACE });
@@ -52,11 +65,10 @@ export default function FinalCta() {
         });
         setCalLoaded(true);
       } catch (err) {
-        console.error('Cal.com init issue:', err);
         setCalLoaded(true);
       }
     })();
-  }, []);
+  }, [shouldInitCal]);
 
   const handleFallbackSubmit = async (e) => {
     e.preventDefault();
@@ -73,7 +85,7 @@ export default function FinalCta() {
   };
 
   return (
-    <section className="fcta-section" id="booking-section">
+    <section className="fcta-section" id="booking-section" ref={sectionRef}>
       <div className="fcta-orb fcta-orb-left" />
       <div className="fcta-orb fcta-orb-right" />
       <div className="fcta-orb fcta-orb-center" />
@@ -127,13 +139,15 @@ export default function FinalCta() {
             </div>
           )}
 
-          <Cal
-            namespace={CAL_NAMESPACE}
-            calLink={CAL_LINK}
-            className="booking-cal-embed"
-            style={{ width: '100%', height: '100%', minHeight: '660px', border: 'none', borderRadius: '16px' }}
-            config={{ layout: 'month_view', useSlotsViewOnSmallScreen: 'true' }}
-          />
+          {shouldInitCal && (
+            <Cal
+              namespace={CAL_NAMESPACE}
+              calLink={CAL_LINK}
+              className="booking-cal-embed"
+              style={{ width: '100%', height: '100%', minHeight: '660px', border: 'none', borderRadius: '16px' }}
+              config={{ layout: 'month_view', useSlotsViewOnSmallScreen: 'true' }}
+            />
+          )}
 
           <div className="booking-fallback-bar" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: 'rgba(15, 23, 42, 0.8)', padding: '14px 20px', borderRadius: '0 0 16px 16px', fontSize: 13, color: '#cbd5e1', marginTop: 8 }}>
             <span>Taking too long or calendar not loading?</span>
