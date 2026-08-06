@@ -35,7 +35,7 @@ milestoneSchema.pre('save', function stampCompletion(next) {
   if (this.isModified('status')) {
     this.completedAt = this.status === 'completed' ? new Date() : undefined;
   }
-  next();
+  if (typeof next === 'function') next();
 });
 
 milestoneSchema.statics.STATUSES = MILESTONE_STATUSES;

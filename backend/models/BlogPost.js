@@ -46,12 +46,12 @@ const blogPostSchema = new mongoose.Schema(
 // Keep slug in sync with title; stamp publishedAt when first published.
 blogPostSchema.pre('save', function preSave(next) {
   if (this.isModified('title') || !this.slug) {
-    this.slug = slugify(this.title);
+    this.slug = slugify(this.title || '');
   }
   if (this.isModified('published')) {
     this.publishedAt = this.published ? this.publishedAt || new Date() : undefined;
   }
-  next();
+  if (typeof next === 'function') next();
 });
 
 blogPostSchema.statics.slugify = slugify;

@@ -214,7 +214,7 @@ export default function ServicesPage({ isHomepage = false }) {
                     </div>
 
                     <div className="svc-card-body">
-                      <h2 className="svc-card-title" style={{ '--svc-color': s.color }}>{s.title}</h2>
+                      <h3 className="svc-card-title" style={{ '--svc-color': s.color }}>{s.title}</h3>
                       <p className="svc-card-tagline" style={{ color: s.color }}>{s.tagline}</p>
                       <p className="svc-card-desc">{s.desc}</p>
                       <ul className="svc-bullets">

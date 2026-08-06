@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&display=swap');
+/* Fonts loaded optimized via next/font/google in layout.js */
 
 /* ── Hero Container ── */
 .hero-viewport-container {
@@ -377,6 +377,12 @@
   transform-style: preserve-3d;
   will-change: transform;
   z-index: 10;
+  animation: heroFloatCard 6s ease-in-out infinite;
+}
+
+@keyframes heroFloatCard {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-7px); }
 }
 
 .hero-stat-card-roi {
@@ -437,7 +443,7 @@
 .hsc-label {
   font-family: 'Inter', sans-serif;
   font-size: 11px;
-  color: #475569;
+  color: #94a3b8;
   font-weight: 500;
   margin-top: 2px;
 }

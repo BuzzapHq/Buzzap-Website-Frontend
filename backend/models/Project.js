@@ -64,8 +64,11 @@ const projectSchema = new mongoose.Schema(
 // Generate a unique slug from the title before validation.
 // Appends a short random suffix so titles can repeat across clients.
 projectSchema.pre('validate', async function generateSlug(next) {
-  if (this.slug && !this.isModified('title')) return next();
-  const base = slugify(this.title) || 'project';
+  if (this.slug && !this.isModified('title')) {
+    if (typeof next === 'function') next();
+    return;
+  }
+  const base = slugify(this.title || '') || 'project';
   let candidate = base;
   let n = 0;
   // Loop until we find a free slug (bounded — the counter guarantees termination).
@@ -74,7 +77,7 @@ projectSchema.pre('validate', async function generateSlug(next) {
     candidate = `${base}-${n}`;
   }
   this.slug = candidate;
-  next();
+  if (typeof next === 'function') next();
 });
 
 projectSchema.statics.STATUSES = PROJECT_STATUSES;

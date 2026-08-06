@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&display=swap');
+/* Fonts loaded optimized via next/font/google in layout.js */
 
 /* ── Page ── */
 .svc-page {
@@ -417,7 +417,7 @@
 .svc-step-desc {
   font-family: 'Inter', sans-serif;
   font-size: 13.5px;
-  color: #475569;
+  color: #94a3b8;
   line-height: 1.65;
 }
 

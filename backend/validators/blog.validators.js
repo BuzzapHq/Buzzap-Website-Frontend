@@ -4,7 +4,7 @@ const createPostSchema = z.object({
   title: z.string().min(2, 'Title is required').max(200).trim(),
   excerpt: z.string().max(500).trim().optional(),
   content: z.string().min(1, 'Content is required'),
-  coverImage: z.string().url().optional().or(z.literal('')),
+  coverImage: z.string().optional().or(z.literal('')),
   tags: z.array(z.string().trim()).optional(),
   published: z.boolean().optional(),
 });
@@ -14,7 +14,7 @@ const updatePostSchema = z
     title: z.string().min(2).max(200).trim().optional(),
     excerpt: z.string().max(500).trim().optional(),
     content: z.string().min(1).optional(),
-    coverImage: z.string().url().optional().or(z.literal('')),
+    coverImage: z.string().optional().or(z.literal('')),
     tags: z.array(z.string().trim()).optional(),
     published: z.boolean().optional(),
   })

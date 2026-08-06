@@ -37,30 +37,15 @@ const RevealWord = ({ text, delay }) => (
   </motion.span>
 );
 
-/* ── 3D floating card ── */
+/* ── 3D floating card (GPU accelerated) ── */
 function FloatingCard({ children, delay = 0, className = '' }) {
-  const y = useMotionValue(0);
-  const rotateX = useSpring(useTransform(y, [-100, 100], [4, -4]), { stiffness: 200, damping: 20 });
-
-  useEffect(() => {
-    let start = null;
-    const animY = (ts) => {
-      if (!start) start = ts;
-      const t = (ts - start) / 1000;
-      y.set(Math.sin(t * 0.8 + delay) * 8);
-      requestAnimationFrame(animY);
-    };
-    const raf = requestAnimationFrame(animY);
-    return () => cancelAnimationFrame(raf);
-  }, [delay, y]);
-
   return (
     <motion.div
       className={`hero-float-card ${className}`}
-      style={{ rotateX, rotateY: 0 }}
       initial={{ opacity: 0, y: 40, scale: 0.9 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
       transition={{ duration: 0.8, delay: 0.9 + delay * 0.15, ease: [0.16, 1, 0.3, 1] }}
+      style={{ animationDelay: `${delay * 0.4}s` }}
     >
       {children}
     </motion.div>
@@ -86,35 +71,50 @@ export default function HomePage() {
     let w = (canvas.width = window.innerWidth);
     let h = (canvas.height = window.innerHeight);
 
-    const dots = Array.from({ length: 100 }, () => ({
+    // Throttle particles count for 60 FPS compositor smoothness & 0ms blocking
+    const count = w < 768 ? 15 : 35;
+    const dots = Array.from({ length: count }, () => ({
       x: Math.random() * w,
       y: Math.random() * h,
-      r: Math.random() * 1.8 + 0.3,
-      vx: (Math.random() - 0.5) * 0.15,
-      vy: (Math.random() - 0.5) * 0.15,
-      alpha: Math.random() * 0.3 + 0.05,
+      r: Math.random() * 1.5 + 0.3,
+      vx: (Math.random() - 0.5) * 0.12,
+      vy: (Math.random() - 0.5) * 0.12,
+      alpha: Math.random() * 0.25 + 0.05,
       hue: Math.random() > 0.6 ? 250 : 220,
     }));
 
     let raf;
-    const draw = () => {
-      ctx.clearRect(0, 0, w, h);
-      dots.forEach((d) => {
-        d.x += d.vx; d.y += d.vy;
-        if (d.x < 0) d.x = w; if (d.x > w) d.x = 0;
-        if (d.y < 0) d.y = h; if (d.y > h) d.y = 0;
-        ctx.beginPath();
-        ctx.arc(d.x, d.y, d.r, 0, Math.PI * 2);
-        ctx.fillStyle = `hsla(${d.hue}, 80%, 70%, ${d.alpha})`;
-        ctx.fill();
-      });
+    let lastTime = 0;
+    const draw = (now) => {
+      // Limit canvas draw calls to 30 FPS to free up main thread for hydration
+      if (!lastTime || now - lastTime > 32) {
+        lastTime = now;
+        ctx.clearRect(0, 0, w, h);
+        dots.forEach((d) => {
+          d.x += d.vx; d.y += d.vy;
+          if (d.x < 0) d.x = w; if (d.x > w) d.x = 0;
+          if (d.y < 0) d.y = h; if (d.y > h) d.y = 0;
+          ctx.beginPath();
+          ctx.arc(d.x, d.y, d.r, 0, Math.PI * 2);
+          ctx.fillStyle = `hsla(${d.hue}, 80%, 70%, ${d.alpha})`;
+          ctx.fill();
+        });
+      }
       raf = requestAnimationFrame(draw);
     };
-    draw();
+
+    // Delay particle loop start by 300ms to allow hydration to finish uninterrupted
+    const startTimer = setTimeout(() => {
+      raf = requestAnimationFrame(draw);
+    }, 300);
 
     const onResize = () => { w = canvas.width = window.innerWidth; h = canvas.height = window.innerHeight; };
     window.addEventListener('resize', onResize);
-    return () => { cancelAnimationFrame(raf); window.removeEventListener('resize', onResize); };
+    return () => {
+      clearTimeout(startTimer);
+      if (raf) cancelAnimationFrame(raf);
+      window.removeEventListener('resize', onResize);
+    };
   }, []);
 
   return (
