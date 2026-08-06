@@ -41,7 +41,8 @@ export default function LazyVideo({
           src={poster}
           alt={alt}
           fill
-          sizes="(max-width: 768px) 100vw, 50vw"
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 400px, 384px"
+          quality={70}
           className="lazy-video-poster"
           style={{ objectFit: 'cover', opacity: shouldLoad ? 0.3 : 1, transition: 'opacity 0.5s ease' }}
         />

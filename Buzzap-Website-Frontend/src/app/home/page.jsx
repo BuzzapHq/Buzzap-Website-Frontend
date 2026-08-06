@@ -194,6 +194,7 @@ export default function HomePage() {
                 quality={75}
                 className="hero-img"
                 priority
+                fetchPriority="high"
               />
               <div className="hero-img-overlay" />
 
