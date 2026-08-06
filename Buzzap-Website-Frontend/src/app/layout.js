@@ -150,6 +150,8 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable} ${inter.variable} ${spaceGrotesk.variable}`}>
       <head>
+        <link rel="preconnect" href="https://buzzap-website-frontend.onrender.com" />
+        <link rel="dns-prefetch" href="https://buzzap-website-frontend.onrender.com" />
         <link rel="icon" type="image/png" href="/logo.png" />
         <link rel="apple-touch-icon" href="/logo.png" />
         <script
