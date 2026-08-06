@@ -106,9 +106,11 @@ const uploadImage = asyncHandler(async (req, res) => {
 
 // POST /api/blog/:id/react  (public)
 const reactToPost = asyncHandler(async (req, res) => {
-  const { type } = req.body; // 'like', 'love', 'insightful', 'celebrate', 'mindblown'
+  const { type, previousType, action } = req.body;
   const validTypes = ['like', 'love', 'insightful', 'celebrate', 'mindblown'];
-  if (!validTypes.includes(type)) throw ApiError.badRequest('Invalid reaction type');
+
+  if (type && !validTypes.includes(type)) throw ApiError.badRequest('Invalid reaction type');
+  if (previousType && !validTypes.includes(previousType)) throw ApiError.badRequest('Invalid previous reaction type');
 
   const post = await BlogPost.findById(req.params.id);
   if (!post) throw ApiError.notFound('Post not found');
@@ -116,9 +118,18 @@ const reactToPost = asyncHandler(async (req, res) => {
   if (!post.reactions) {
     post.reactions = { like: 0, love: 0, insightful: 0, celebrate: 0, mindblown: 0 };
   }
-  post.reactions[type] = (post.reactions[type] || 0) + 1;
-  await post.save();
 
+  // Remove previous reaction if switching or toggling off
+  if (previousType && post.reactions[previousType] !== undefined) {
+    post.reactions[previousType] = Math.max(0, (post.reactions[previousType] || 0) - 1);
+  }
+
+  // Add new reaction if not removing
+  if (action !== 'remove' && type) {
+    post.reactions[type] = (post.reactions[type] || 0) + 1;
+  }
+
+  await post.save();
   res.status(200).json({ status: 'success', reactions: post.reactions });
 });
 
@@ -147,15 +158,20 @@ const addComment = asyncHandler(async (req, res) => {
 
 // POST /api/blog/:id/comments/:commentId/like  (public)
 const likeComment = asyncHandler(async (req, res) => {
+  const { action } = req.body; // 'like' | 'unlike'
   const post = await BlogPost.findById(req.params.id);
   if (!post) throw ApiError.notFound('Post not found');
 
   const comment = post.comments.id(req.params.commentId);
   if (!comment) throw ApiError.notFound('Comment not found');
 
-  comment.likes = (comment.likes || 0) + 1;
-  await post.save();
+  if (action === 'unlike') {
+    comment.likes = Math.max(0, (comment.likes || 0) - 1);
+  } else {
+    comment.likes = (comment.likes || 0) + 1;
+  }
 
+  await post.save();
   res.status(200).json({ status: 'success', likes: comment.likes, comments: post.comments });
 });
 

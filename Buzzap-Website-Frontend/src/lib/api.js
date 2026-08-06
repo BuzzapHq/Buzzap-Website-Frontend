@@ -197,16 +197,17 @@ export async function uploadBlogImage(file) {
   return data;
 }
 
-export function reactToPost(postId, type) {
-  return apiFetch(`/api/blog/${postId}/react`, { method: 'POST', body: { type } });
+export function reactToPost(postId, payload) {
+  const body = typeof payload === 'string' ? { type: payload } : payload;
+  return apiFetch(`/api/blog/${postId}/react`, { method: 'POST', body });
 }
 
 export function addPostComment(postId, commentData) {
   return apiFetch(`/api/blog/${postId}/comments`, { method: 'POST', body: commentData });
 }
 
-export function likePostComment(postId, commentId) {
-  return apiFetch(`/api/blog/${postId}/comments/${commentId}/like`, { method: 'POST' });
+export function likePostComment(postId, commentId, action = 'like') {
+  return apiFetch(`/api/blog/${postId}/comments/${commentId}/like`, { method: 'POST', body: { action } });
 }
 
 // --- Pricing ---
