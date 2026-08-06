@@ -190,8 +190,8 @@ export default function HomePage() {
                 src="/product2.jpeg"
                 alt="AI Growth Dashboard"
                 fill
-                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 40vw"
-                quality={75}
+                sizes="(max-width: 480px) 92vw, (max-width: 768px) 80vw, 450px"
+                quality={68}
                 className="hero-img"
                 priority
                 fetchPriority="high"
