@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Sparkles, Zap, Terminal, Code, Cpu, CheckCircle2, Copy, Check, RefreshCw, Layers } from 'lucide-react';
 import './aiStudio.css';
