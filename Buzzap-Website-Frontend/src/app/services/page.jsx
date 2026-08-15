@@ -1,11 +1,20 @@
 'use client';
-import { useRef } from 'react';
-import { motion, useMotionValue, useTransform, useSpring } from 'framer-motion';
-import { ArrowRight, ArrowUpRight, BarChart2, Search, Cpu, MessageSquare, PenTool, Layers, CheckCircle } from 'lucide-react';
+// Buzzap Services Page Component
+import { useRef, useState } from 'react';
+import { motion, useMotionValue, useTransform, useSpring, AnimatePresence } from 'framer-motion';
+import { ArrowRight, ArrowUpRight, BarChart2, Search, Cpu, MessageSquare, PenTool, Layers, CheckCircle, Globe, Video, Wrench, Trophy, X, Play } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 import LazyVideo from '@/components/LazyVideo';
 import './service.css';
+
+const categories = [
+  { id: 'all', label: 'All Capabilities' },
+  { id: 'ads', label: 'AI Marketing & Ads' },
+  { id: 'automation', label: 'CRM & Automations' },
+  { id: 'support', label: 'Voice AI & Support' },
+  { id: 'strategy', label: 'Web & Strategy' },
+];
 
 const services = [
   {
@@ -18,7 +27,7 @@ const services = [
     desc: 'High-converting, hyper-targeted campaigns across premium digital channels designed to capture attention and scale ROI through autonomous testing and instant lead distribution.',
     bullets: ['Meta & Google Ads automation', 'AI-driven ad copy and creative testing', 'Multi-channel lead capture systems', 'Automated email and SMS sequences', 'Real-time campaign performance dashboards'],
     image: '/product2.jpeg',
-    video: '/services.mp4',
+    video: '/Paid Ads and AI marketing.mp4',
     color: '#818cf8',
   },
   {
@@ -31,7 +40,7 @@ const services = [
     desc: 'Algorithmic search positioning and predictive keyword intent structures engineered to dominate traffic channels and build long-term authority.',
     bullets: ['Technical SEO audit and implementation', 'Keyword strategy and content architecture', 'Brand identity and positioning', 'Local SEO and Google Business optimisation', 'Authority link building campaigns'],
     image: '/social.jpeg',
-    video: '/1782395091229 (1).mp4',
+    video: '/AI SEO.mp4',
     color: '#10b981',
   },
   {
@@ -44,7 +53,7 @@ const services = [
     desc: 'Autonomous prospect sourcing pipelines that automatically track, qualify, and score high-intent buyers into your pipeline 24/7.',
     bullets: ['CRM setup and full configuration', 'Automated lead routing and scoring', 'WhatsApp and SMS follow-up sequences', 'Pipeline stage automation', 'Zoho, HubSpot, and Apollo.io integrations'],
     image: '/product3.jpeg',
-    video: '/1782380563471 (1).mp4',
+    video: '/CRM & LEAD AUTOMATION.mp4',
     color: '#f59e0b',
   },
   {
@@ -57,41 +66,92 @@ const services = [
     desc: 'Intelligent, conversational automated engines delivering instant resolution to your clients around the clock across WhatsApp, Web, and Voice AI.',
     bullets: ['Custom-trained chatbots (Voiceflow, Vapi)', 'WhatsApp AI agents for instant resolution', 'Voice AI for inbound and outbound calls', 'Appointment booking automation via Cal.com', 'Handoff to human agents when needed'],
     image: '/ai.jpeg',
-    video: '/1782395025815.mp4',
+    video: '/animation for AI-voice agents.mp4',
     color: '#c084fc',
   },
   {
-    id: 'content-strategy',
-    icon: PenTool,
+    id: 'ai-video-ads',
+    icon: Video,
     label: '05',
-    title: 'CONTENT & CREATIVE STRATEGY',
-    capability: 'VISUAL & CONTENT AI',
-    tagline: 'Content that converts.',
-    desc: 'We build AI-assisted content pipelines that produce high-quality blog posts, social content, ad creative, and video scripts at scale — aligned to your brand voice.',
-    bullets: ['AI-accelerated blog and SEO content', 'Social media content calendars', 'Ad copywriting and creative briefs', 'Video scripts and UGC frameworks', 'Email newsletter production'],
+    title: 'AI VIDEO ADS & CREATIVE',
+    capability: 'AI VIDEO CREATIVE',
+    tagline: 'Generative video & dynamic ad hooks.',
+    desc: 'Automated video production pipelines producing high-converting video hooks, UGC variations, and video ad creatives tailored for Meta, TikTok, and YouTube.',
+    bullets: ['AI video script generation & storyboard', 'Dynamic UGC & avatar video ad hooks', 'Multi-variant testing for high ROAS', 'Automated video resizing for all formats', 'Continuous creative refresh engine'],
     image: '/product4.jpeg',
-    video: '/1782395025815 (1).mp4',
+    video: '/AI VIDEO ADS.mp4',
     color: '#f43f5e',
+  },
+  {
+    id: 'brand-identity',
+    icon: PenTool,
+    label: '06',
+    title: 'BRAND & VISUAL IDENTITY',
+    capability: 'BRAND IDENTITY',
+    tagline: 'Distinctive, premium visual positioning.',
+    desc: 'Engineered brand identity systems, typography, color palettes, and motion design guidelines that position your business as an industry leader.',
+    bullets: ['Complete brand visual systems', 'Logo design & typography guidelines', 'Motion graphics & video asset suites', 'Ad creative templates & asset libraries', 'Brand messaging & voice framework'],
+    image: '/buzz.jpeg',
+    video: '/Brand and Visual Identity.mp4',
+    color: '#ec4899',
+  },
+  {
+    id: 'web-design-dev',
+    icon: Globe,
+    label: '07',
+    title: 'WEB DESIGN & WEB DEVELOPMENT',
+    capability: 'WEB INFRASTRUCTURE',
+    tagline: 'Ultra-fast, high-converting digital experiences.',
+    desc: 'Custom Next.js & React web applications designed for maximum speed, seamless mobile conversion, and direct integration into your AI pipelines.',
+    bullets: ['Ultra-fast Next.js / React web apps', 'Conversion-rate optimized UI/UX design', 'Full API & CRM integration', 'Zero-latency mobile performance', 'Automated analytics & lead tracking'],
+    image: '/produc5.jpeg',
+    video: '/WEB DESIGN & WEB DEVELOPMENT.mp4',
+    color: '#06b6d4',
   },
   {
     id: 'growth-consulting',
     icon: MessageSquare,
-    label: '06',
+    label: '08',
     title: 'GROWTH CONSULTING',
     capability: 'SYSTEM ARCHITECTURE',
     tagline: 'Strategy before execution.',
     desc: 'Before we build anything, we audit where your current systems are breaking down. Our consulting engagements identify your highest-leverage opportunities.',
     bullets: ['Full business growth audit', 'Revenue gap analysis', 'AI readiness assessment', 'Custom automation roadmap', 'Monthly strategy and performance reviews'],
-    image: '/buzz.jpeg',
-    color: '#06b6d4',
+    image: '/gb.jpeg',
+    video: '/services.mp4',
+    color: '#3b82f6',
   },
 ];
 
 const processSteps = [
-  { n: '01', title: 'Audit', desc: 'We analyse your current marketing, sales, and operations stack to identify where you are losing revenue.' },
-  { n: '02', title: 'Architect', desc: 'We design a custom growth system — selecting the right tools, automations, and channels for your business.' },
-  { n: '03', title: 'Build', desc: 'Our team deploys your AI infrastructure end-to-end — CRM, ads, automations, agents, and content systems.' },
-  { n: '04', title: 'Optimise', desc: 'We monitor performance weekly and continuously refine every lever — so your results compound over time.' },
+  {
+    n: '01',
+    title: 'Audit',
+    desc: 'We analyse your current marketing, sales, and operations stack to identify where you are losing revenue.',
+    icon: Search,
+    color: '#10b981',
+  },
+  {
+    n: '02',
+    title: 'Architect',
+    desc: 'We design a custom growth system — selecting the right tools, automations, and channels for your business.',
+    icon: Wrench,
+    color: '#06b6d4',
+  },
+  {
+    n: '03',
+    title: 'Build',
+    desc: 'Our team deploys your AI infrastructure end-to-end — CRM, ads, automations, agents, and content systems.',
+    icon: Layers,
+    color: '#818cf8',
+  },
+  {
+    n: '04',
+    title: 'Optimise',
+    desc: 'We monitor performance weekly and continuously refine every lever — so your results compound over time.',
+    icon: Trophy,
+    color: '#f59e0b',
+  },
 ];
 
 const fadeUp = {
@@ -135,6 +195,12 @@ function TiltCard({ children, className = '' }) {
 }
 
 export default function ServicesPage({ isHomepage = false }) {
+  const [activeCategory, setActiveCategory] = useState('all');
+  const [selectedVideo, setSelectedVideo] = useState(null);
+
+  const filteredServices = activeCategory === 'all'
+    ? services
+    : services.filter((s) => s.category === activeCategory);
   return (
     <main className={`svc-page ${isHomepage ? 'svc-homepage-embed' : ''}`}>
 
@@ -242,21 +308,108 @@ export default function ServicesPage({ isHomepage = false }) {
         </div>
       </section>
 
-      {/* Process */}
-      <section className="svc-process-section">
+      {/* Process Section matching reference layout screenshot */}
+      <section className="svc-process-section" id="process">
         <div className="svc-container">
           <div className="svc-process-header">
-            <span className="svc-label">How it works</span>
-            <h2 className="svc-section-title">A process built for results,<br /><span className="svc-muted">not activity.</span></h2>
+            <span className="svc-label">How the system runs</span>
+            <h2 className="svc-section-title">
+              A process built for results,<br />
+              <span className="svc-muted">not activity.</span>
+            </h2>
           </div>
-          <div className="svc-process-grid">
-            {processSteps.map((step, i) => (
-              <motion.div key={i} className="svc-step" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} custom={i} whileHover={{ y: -4 }}>
-                <span className="svc-step-num">{step.n}</span>
-                <h3 className="svc-step-title">{step.title}</h3>
-                <p className="svc-step-desc">{step.desc}</p>
-              </motion.div>
-            ))}
+
+          <div className="svc-process-split">
+            {/* LEFT COLUMN: CIRCULAR ORBIT LOOP GRAPHIC (From Screenshot) */}
+            <motion.div
+              className="svc-loop-wrapper"
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+            >
+              <div className="svc-loop-container">
+                {/* Orbital Ring Graphic */}
+                <div className="svc-loop-ring" />
+                <div className="svc-loop-ring-pulse" />
+
+                {/* Orbiting Moving Glowing Dot */}
+                <div className="svc-orbit-dot-track">
+                  <div className="svc-orbit-dot" />
+                </div>
+
+                {/* Central Core Orb */}
+                <div className="svc-loop-core">
+                  <span className="svc-loop-core-sub">EVERY</span>
+                  <span className="svc-loop-core-main">30 DAYS</span>
+                  <span className="svc-loop-core-foot">ONE FULL LOOP</span>
+                </div>
+
+                {/* Node 01: Top (BRANDING) */}
+                <div className="svc-loop-node svc-node-top">
+                  <div className="svc-node-card">
+                    <Search size={22} color="#0d9488" strokeWidth={2.2} />
+                    <span className="svc-node-badge">01</span>
+                  </div>
+                  <span className="svc-node-label">BRANDING</span>
+                </div>
+
+                {/* Node 02: Right (PAID ADS / AI SEO) */}
+                <div className="svc-loop-node svc-node-right">
+                  <div className="svc-node-card">
+                    <Wrench size={22} color="#0d9488" strokeWidth={2.2} />
+                    <span className="svc-node-badge">02</span>
+                  </div>
+                  <span className="svc-node-label">PAID ADS / AI SEO</span>
+                </div>
+
+                {/* Node 03: Bottom (CRM - AUTOMATED FOLLOW UP) */}
+                <div className="svc-loop-node svc-node-bottom">
+                  <div className="svc-node-card">
+                    <Layers size={22} color="#0d9488" strokeWidth={2.2} />
+                    <span className="svc-node-badge">03</span>
+                  </div>
+                  <span className="svc-node-label">CRM - AUTOMATED FOLLOW UP</span>
+                </div>
+
+                {/* Node 04: Left ($1,000,000,000 REVENUE) */}
+                <div className="svc-loop-node svc-node-left">
+                  <div className="svc-node-card">
+                    <Trophy size={22} color="#0d9488" strokeWidth={2.2} />
+                    <span className="svc-node-badge">04</span>
+                  </div>
+                  <span className="svc-node-label">$1,000,000,000 REVENUE</span>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* RIGHT COLUMN: VERTICAL TIMELINE LIST (From Screenshot) */}
+            <div className="svc-timeline-wrapper">
+              {processSteps.map((step, i) => {
+                const StepIcon = step.icon || CheckCircle;
+                return (
+                  <motion.div
+                    key={i}
+                    className="svc-timeline-item"
+                    initial={{ opacity: 0, x: 24 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: i * 0.12, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                  >
+                    <div className="svc-timeline-icon-box" style={{ '--step-color': step.color }}>
+                      <StepIcon size={20} />
+                    </div>
+                    <div className="svc-timeline-content">
+                      <div className="svc-timeline-header">
+                        <span className="svc-timeline-num">{step.n}</span>
+                        <h3 className="svc-timeline-title">{step.title}</h3>
+                      </div>
+                      <p className="svc-timeline-desc">{step.desc}</p>
+                    </div>
+                  </motion.div>
+                );
+              })}
+            </div>
           </div>
         </div>
       </section>
@@ -274,6 +427,42 @@ export default function ServicesPage({ isHomepage = false }) {
           </div>
         </section>
       )}
+
+      {/* Video Modal Lightbox */}
+      <AnimatePresence>
+        {selectedVideo && (
+          <motion.div
+            className="svc-video-modal-backdrop"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setSelectedVideo(null)}
+          >
+            <motion.div
+              className="svc-video-modal-content"
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <button
+                type="button"
+                className="svc-video-modal-close"
+                onClick={() => setSelectedVideo(null)}
+              >
+                <X size={20} />
+              </button>
+              <div className="svc-video-modal-header">
+                <h3>{selectedVideo.title}</h3>
+                <span className="svc-capability-tag">{selectedVideo.capability}</span>
+              </div>
+              <div className="svc-video-modal-body">
+                <video src={selectedVideo.video} controls autoPlay className="svc-modal-video-player" />
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </main>
   );
 }

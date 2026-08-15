@@ -50,12 +50,12 @@ export default function Pricing() {
         <div className="pricing-header">
           <h1>Try It Out First, Then<br />Choose a Strategy.</h1>
           <p>Simple plans, simple prices. Only pay for what you really need. Change or cancel your plan at anytime.</p>
-          
+
           {/* Custom Billing Toggle Switch Frame */}
           <div className="billing-toggle-container">
             <span className={`toggle-label ${!isYearly ? 'active' : ''}`}>Monthly</span>
-            <button 
-              className={`toggle-switch-track ${isYearly ? 'switched' : ''}`} 
+            <button
+              className={`toggle-switch-track ${isYearly ? 'switched' : ''}`}
               onClick={() => setIsYearly(!isYearly)}
               aria-label="Toggle Billing Cycle"
             >
@@ -107,8 +107,8 @@ export default function Pricing() {
           <h2>Frequently Asked Questions</h2>
           <div className="faq-accordion-group">
             {faqs.map((faq, index) => (
-              <div 
-                key={index} 
+              <div
+                key={index}
                 className={`faq-item-row ${activeFaq === index ? 'expanded' : ''}`}
                 onClick={() => toggleFaq(index)}
               >

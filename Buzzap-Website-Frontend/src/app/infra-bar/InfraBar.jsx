@@ -71,20 +71,20 @@ const brandSvgs = {
   ),
 };
 
+import Image from 'next/image';
+
 const tools = [
-  { name: 'OpenAI', color: '#10a37f', bg: 'rgba(16,163,127,0.12)', border: 'rgba(16,163,127,0.3)' },
-  { name: 'Claude', color: '#f59e0b', bg: 'rgba(245,158,11,0.12)', border: 'rgba(245,158,11,0.3)' },
-  { name: 'Meta Ads', color: '#0082fb', bg: 'rgba(0,130,251,0.12)', border: 'rgba(0,130,251,0.3)' },
-  { name: 'Google Ads', color: '#4285f4', bg: 'rgba(66,133,244,0.12)', border: 'rgba(66,133,244,0.3)' },
-  { name: 'Make.com', color: '#a259ff', bg: 'rgba(162,89,255,0.12)', border: 'rgba(162,89,255,0.3)' },
-  { name: 'Voiceflow', color: '#5865f2', bg: 'rgba(88,101,242,0.12)', border: 'rgba(88,101,242,0.3)' },
-  { name: 'Vapi', color: '#06b6d4', bg: 'rgba(6,182,212,0.12)', border: 'rgba(6,182,212,0.3)' },
-  { name: 'Zoho CRM', color: '#ef4444', bg: 'rgba(239,68,68,0.12)', border: 'rgba(239,68,68,0.3)' },
-  { name: 'Cal.com', color: '#6366f1', bg: 'rgba(99,102,241,0.12)', border: 'rgba(99,102,241,0.3)' },
-  { name: 'HubSpot', color: '#ff7a59', bg: 'rgba(255,122,89,0.12)', border: 'rgba(255,122,89,0.3)' },
-  { name: 'WhatsApp', color: '#25d366', bg: 'rgba(37,211,102,0.12)', border: 'rgba(37,211,102,0.3)' },
-  { name: 'Clay', color: '#8b5cf6', bg: 'rgba(139,92,246,0.12)', border: 'rgba(139,92,246,0.3)' },
-  { name: 'Apollo.io', color: '#f97316', bg: 'rgba(249,115,22,0.12)', border: 'rgba(249,115,22,0.3)' },
+  { name: 'OpenAI', logoImg: '/open ai logo.jpg', color: '#10a37f', bg: 'rgba(16,163,127,0.12)', border: 'rgba(16,163,127,0.3)' },
+  { name: 'n8n Automation', logoImg: '/n8n logo.jpg', color: '#ff6d5a', bg: 'rgba(255,109,90,0.12)', border: 'rgba(255,109,90,0.3)' },
+  { name: 'Meta Ads', logoImg: '/meta ads logo.jpg', color: '#0082fb', bg: 'rgba(0,130,251,0.12)', border: 'rgba(0,130,251,0.3)' },
+  { name: 'Google Ads', logoImg: '/google ads logo.jpg', color: '#4285f4', bg: 'rgba(66,133,244,0.12)', border: 'rgba(66,133,244,0.3)' },
+  { name: 'Make.com', logoImg: '/make.com logo.jpg', color: '#a259ff', bg: 'rgba(162,89,255,0.12)', border: 'rgba(162,89,255,0.3)' },
+  { name: 'GoHighLevel', logoImg: '/gohighlevel logo.jpg', color: '#10b981', bg: 'rgba(16,185,129,0.12)', border: 'rgba(16,185,129,0.3)' },
+  { name: 'Vapi.ai', logoImg: '/vapi.ai logo.jpg', color: '#06b6d4', bg: 'rgba(6,182,212,0.12)', border: 'rgba(6,182,212,0.3)' },
+  { name: 'Zoho CRM', logoImg: '/zoho logo.jpg', color: '#ef4444', bg: 'rgba(239,68,68,0.12)', border: 'rgba(239,68,68,0.3)' },
+  { name: 'Calendly', logoImg: '/calendly logo.jpg', color: '#006bfc', bg: 'rgba(0,107,252,0.12)', border: 'rgba(0,107,252,0.3)' },
+  { name: 'Brevo', logoImg: '/brevo logo.jpg', color: '#0092ff', bg: 'rgba(0,146,255,0.12)', border: 'rgba(0,146,255,0.3)' },
+  { name: 'Sora 2 AI', logoImg: '/sora 2 logo.jpg', color: '#c084fc', bg: 'rgba(192,132,252,0.12)', border: 'rgba(192,132,252,0.3)' },
 ];
 
 export default function InfraBar() {
@@ -122,8 +122,26 @@ export default function InfraBar() {
                 '--tool-border': tool.border,
               }}
             >
-              <div className="infra-tool-logo" style={{ background: tool.bg, border: `1px solid ${tool.border}`, color: tool.color }}>
-                {brandSvgs[tool.name] || brandSvgs.OpenAI}
+              <div
+                className="infra-tool-logo"
+                style={{
+                  position: 'relative',
+                  width: 26,
+                  height: 26,
+                  borderRadius: '50%',
+                  overflow: 'hidden',
+                  background: tool.bg,
+                  border: `1px solid ${tool.border}`,
+                  flexShrink: 0,
+                }}
+              >
+                <Image
+                  src={tool.logoImg}
+                  alt={tool.name}
+                  fill
+                  style={{ objectFit: 'cover' }}
+                  sizes="30px"
+                />
               </div>
               <span className="infra-tool-name">{tool.name}</span>
             </div>

@@ -5,7 +5,6 @@ export default function sitemap() {
     '',
     '/services',
     '/brand',
-    '/brand-showcase',
     '/case-studies',
     '/why-buzzap',
     '/products',
@@ -15,8 +14,11 @@ export default function sitemap() {
     '/contact',
     '/about',
     '/faq',
-    '/ai-solution/system',
+    '/demo',
     '/demo/video',
+    '/privacy',
+    '/terms',
+    '/security',
   ];
 
   const currentDate = new Date().toISOString();
