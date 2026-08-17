@@ -72,7 +72,7 @@ export const metadata = {
     apple: "/logo.png",
   },
   alternates: {
-    canonical: siteUrl,
+    canonical: "./",
   },
   openGraph: {
     type: "website",
@@ -142,6 +142,49 @@ const jsonLd = {
       publisher: {
         "@id": `${siteUrl}/#organization`,
       },
+    },
+    {
+      "@type": "ItemList",
+      "@id": `${siteUrl}/#site-navigation`,
+      name: "Site Navigation",
+      itemListElement: [
+        {
+          "@type": "SiteNavigationElement",
+          position: 1,
+          name: "Insights & Blog",
+          url: `${siteUrl}/insights`,
+        },
+        {
+          "@type": "SiteNavigationElement",
+          position: 2,
+          name: "Services",
+          url: `${siteUrl}/services`,
+        },
+        {
+          "@type": "SiteNavigationElement",
+          position: 3,
+          name: "Pricing",
+          url: `${siteUrl}/pricing`,
+        },
+        {
+          "@type": "SiteNavigationElement",
+          position: 4,
+          name: "Case Studies",
+          url: `${siteUrl}/case-studies`,
+        },
+        {
+          "@type": "SiteNavigationElement",
+          position: 5,
+          name: "About Us",
+          url: `${siteUrl}/about`,
+        },
+        {
+          "@type": "SiteNavigationElement",
+          position: 6,
+          name: "Contact",
+          url: `${siteUrl}/contact`,
+        },
+      ],
     },
   ],
 };
