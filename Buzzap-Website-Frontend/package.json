@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@calcom/embed-react": "^1.5.3",
+    "@swc/helpers": "^0.5.24",
     "@vercel/analytics": "^2.0.1",
     "@videojs/react": "^10.0.0-beta.24",
     "framer-motion": "^12.40.0",
