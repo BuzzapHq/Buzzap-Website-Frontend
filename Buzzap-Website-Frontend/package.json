@@ -28,8 +28,10 @@
     "video.js": "^8.23.7"
   },
   "devDependencies": {
+    "@opennextjs/cloudflare": "^1.20.18",
     "babel-plugin-react-compiler": "1.0.0",
     "eslint": "^9",
-    "eslint-config-next": "^16.4.6"
+    "eslint-config-next": "^16.4.6",
+    "wrangler": "^4.167.0"
   }
 }
