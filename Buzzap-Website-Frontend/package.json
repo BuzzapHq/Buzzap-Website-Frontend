@@ -5,9 +5,9 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "build:worker": "npx @opennextjs/cloudflare@1.20.18 build",
-    "preview": "npx @opennextjs/cloudflare@1.20.18 build && npx @opennextjs/cloudflare@1.20.18 preview",
-    "deploy": "npx @opennextjs/cloudflare@1.20.18 build && npx @opennextjs/cloudflare@1.20.18 deploy",
+    "build:worker": "npm install --no-save --package-lock=false --no-audit --no-fund @opennextjs/cloudflare@1.20.18 wrangler@4.167.0 && npx @opennextjs/cloudflare@1.20.18 build",
+    "preview": "npm run build:worker && npx @opennextjs/cloudflare@1.20.18 preview",
+    "deploy": "npm run build:worker && npx @opennextjs/cloudflare@1.20.18 deploy",
     "start": "next start",
     "lint": "eslint"
   },
